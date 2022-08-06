@@ -5,32 +5,32 @@ const mongoose = require("mongoose");
 const BoardSchema = new mongoose.Schema(
   {
     title: {
-      type: string,
+      type: String,
       required: true,
       minLength: 3,
       maxLength: 30,
     },
     color: {
-      type: string,
+      type: String,
       required: true,
     },
     image: {
-      type: string,
+      type: String,
     },
     owner: {
-      type: Schema.Types.ObjectId,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId
+      //required: true,
     },
     contributors: {
-      type: array,
-      default: [], //!
+      type: Array,
+      default: [],
     },
     columns: {
-      type: array,
-      default: [], //!
+      type: Array,
+      default: [],
     },
     url: {
-      type: string,
+      type: String,
     },
   },
   {

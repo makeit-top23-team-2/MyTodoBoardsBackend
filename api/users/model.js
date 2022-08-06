@@ -5,36 +5,37 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema(
   {
     userName: {
-      type: string,
+      type: String,
       required: true,
+      unique: true
     },
     email: {
-      type: string,
+      type: String,
       required: true,
+      unique: true
     },
     password: {
-      //!
-      type: string,
+      type: String,
       required: true,
     },
     name: {
-      type: string,
+      type: String,
       required: true,
     },
     lastName: {
-      type: string,
+      type: String,
       required: true,
     },
     boards: {
-      type: array,
-      default: [], //!
+      type: Array,
+      default: [],
     },
     tasks: {
-      type: array,
-      default: [], //!
+      type: Array,
+      default: [],
     },
     url: {
-      type: string,
+      type: String,
     },
   },
   {
@@ -46,4 +47,4 @@ const UserSchema = new mongoose.Schema(
 const User = mongoose.model("User", UserSchema);
 
 //* 4 se exporta el modelo
-module.exports = { User };
+module.exports =  User ;
