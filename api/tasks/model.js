@@ -3,28 +3,32 @@ const mongoose = require("mongoose");
 const TaskSchema = new mongoose.Schema(
   {
     title: {
-      type: string,
+      type: String,
       required: true,
     },
     description: {
-      type: string,
+      type: String,
     },
     img: {
-      type: string,
+      type: String,
+    },
+    board: {
+      type: mongoose.Schema.Types.ObjectId
+      //!required: true,
     },
     users: {
-      type: array,
-      required: true,
+      type: Array,
+      //!required: true,
     },
     deadline: {
-      type: date,
+      type: Date,
     },
     column: {
-      type: Schema.Types.ObjectId,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      //! required: true,
     },
     url: {
-      type: string,
+      type: String,
     },
   },
   { timestamps: true }
@@ -32,4 +36,4 @@ const TaskSchema = new mongoose.Schema(
 
 const Task = mongoose.model("Task", TaskSchema);
 
-module.exports = { Task };
+module.exports = Task ;
