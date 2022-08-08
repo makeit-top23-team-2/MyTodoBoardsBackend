@@ -16,8 +16,9 @@ const BoardSchema = new mongoose.Schema(
       type: String,
     },
     owner: {
-      type: mongoose.Schema.Types.ObjectId
-      //!required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
     },
     contributors: {
       type: Array,

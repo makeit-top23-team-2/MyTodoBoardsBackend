@@ -13,19 +13,21 @@ const TaskSchema = new mongoose.Schema(
       type: String,
     },
     board: {
-      type: mongoose.Schema.Types.ObjectId
-      //!required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Board",
+      required: true
     },
     users: {
       type: Array,
-      //!required: true,
+      default: []
     },
     deadline: {
       type: Date,
     },
     column: {
       type: mongoose.Schema.Types.ObjectId,
-      //! required: true,
+      ref: "Column",
+      required: true,
     },
     url: {
       type: String,

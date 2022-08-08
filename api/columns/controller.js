@@ -31,8 +31,9 @@ async function getSingleColumnHandler(req, res) {
 }
 
 async function createColumnHandler(req, res) {
+  const { id } = req.params
   const columnData = req.body
-
+  columnData = {...columnData, board: id} //*
   try {
     const column = await createColumn(columnData)
     return res.status(201).json(column)

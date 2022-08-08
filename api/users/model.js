@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true
     },
+    avatar:{
+      type: String,
+      default: 'https://i.imgur.com/elMnIEy.gif'
+    },
     email: {
       type: String,
       required: true,

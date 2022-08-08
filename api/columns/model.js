@@ -13,12 +13,9 @@ const ColumnSchema = new mongoose.Schema(
       required: true,
     },
     board: {
-      type: mongoose.Schema.Types.ObjectId
-      //!required: true,
-    },
-    owner: {
-      type: mongoose.Schema.Types.ObjectId
-      //!required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Board",
+      required: true,
     },
     tasks: {
       type: Array,
@@ -32,4 +29,4 @@ const ColumnSchema = new mongoose.Schema(
 
 const Column = mongoose.model("Column", ColumnSchema);
 
-module.exports =  Column ;
+module.exports = Column;

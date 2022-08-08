@@ -31,7 +31,9 @@ async function getSingleBoardHandler(req, res) {
 }
 
 async function createBoardHandler(req, res) {
+  const { id } = req.params
   const boardData = req.body
+  boardData = {...boardData, owner: id} //*
 
   try {
     const board = await createBoard(boardData)
