@@ -1,19 +1,19 @@
-const Task = require('./model.js');
+const Card = require('./model.js');
 
-function getAllTask() {
-  return Task.find({})
+function getAllCard() {
+  return Card.find({})
 }
 
-function getSingleTask(id) {
-  return Task.findById(id)
+function getSingleCard(id) {
+  return Card.findById(id)
 }
 
-function createTask(task) {
-  return Task.create(task)
+function createCard(card) {
+  return Card.create(card)
 }
 
 module.exports = {
-  getAllTask,
-  getSingleTask,
-  createTask
+  getAllCard,
+  getSingleCard,
+  createCard
 }

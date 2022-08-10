@@ -1,48 +1,48 @@
 const services = require('./services.js');
 
 const {
-  createTask,
-  getAllTask,
-  findTaskById
+  createCard,
+  getAllCard,
+  findCardById
 } = services;
 
-async function getAllTaskHandler(req, res) {
+async function getAllCardHandler(req, res) {
   try {
-    const tasks = await getAllTask()
-    return res.status(200).json(tasks)
+    const cards = await getAllCard()
+    return res.status(200).json(cards)
   } catch (error) {
     return res.status(501).json({ error })
   }
 }
 
-async function getSingleTaskHandler(req, res) {
+async function getSingleCardHandler(req, res) {
   const { id } = req.params
   try {
-    const task = await getSingleTask(id)
+    const Card = await getSingleCard(id)
 
-    if (!task) {
-      return res.status(404).json({ message: 'Task not found' })
+    if (!Card) {
+      return res.status(404).json({ message: 'Card not found' })
     }
 
-    return res.json(task)
+    return res.json(card)
   } catch (error) {
     return res.status(500).json({ error })
   }
 }
 
-async function createTaskHandler(req, res) {
-  const taskData = req.body
+async function createCardHandler(req, res) {
+  const cardData = req.body
 
   try {
-    const task = await createTask(taskData)
-    return res.status(201).json(task)
+    const card = await createCard(CardData)
+    return res.status(201).json(Card)
   } catch (error) {
     return res.status(500).json({ error })
   }
 }
 
 module.exports = {
-  getAllTaskHandler,
-  getSingleTaskHandler,
-  createTaskHandler,
+  getAllCardHandler,
+  getSingleCardHandler,
+  createCardHandler,
 }

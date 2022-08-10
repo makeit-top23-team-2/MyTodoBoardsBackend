@@ -44,11 +44,9 @@ const CardSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Card = mongoose.model("Task", CardSchema);
+const Card = mongoose.model("Card", CardSchema);
 
-module.exports = Task ;
-
-
+module.exports = Card ;
 
 
 
@@ -66,5 +64,7 @@ module.exports = Task ;
 
 
 
-z
+
+
+
 

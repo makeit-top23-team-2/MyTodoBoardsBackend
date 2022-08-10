@@ -2,16 +2,16 @@ const express = require('express');
 
 const controller = require('./controller.js');
 const {
-  createTaskHandler,
-  getAllTaskHandler,
-  getSingleTaskHandler,
+  createCardHandler,
+  getAllCardHandler,
+  getSingleCardHandler,
 } = controller;
 
 const router = express.Router();
 
-router.get('/', getAllTaskHandler)
-router.post('/', createTaskHandler)
-router.get('/:id', getSingleTaskHandler)
+router.get('/', getAllCardHandler)
+router.post('/', createCardHandler)
+router.get('/:id', getSingleCardHandler)
 //router.patch('/:id', updateTaskHandler)
 //router.delete('/:id', deleteTaskHandler)
 
