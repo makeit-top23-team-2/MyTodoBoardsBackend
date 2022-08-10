@@ -30,23 +30,3 @@ const ColumnSchema = new mongoose.Schema(
 const Column = mongoose.model("Column", ColumnSchema);
 
 module.exports = Column;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

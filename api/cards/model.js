@@ -15,15 +15,15 @@ const CardSchema = new mongoose.Schema(
     board: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Board",
-      required: true
+      required: true,
     },
     members: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Users"
-      }
+        ref: "Users",
+      },
     ],
-     /* 
+    /* 
     users: {
       type: Array,
       default: []
@@ -46,25 +46,4 @@ const CardSchema = new mongoose.Schema(
 
 const Card = mongoose.model("Card", CardSchema);
 
-module.exports = Card ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+module.exports = Card;
