@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const TaskSchema = new mongoose.Schema(
+const CardSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -15,12 +15,20 @@ const TaskSchema = new mongoose.Schema(
     board: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Board",
-      required: true
+      required: true,
     },
+    members: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Users",
+      },
+    ],
+    /* 
     users: {
       type: Array,
       default: []
     },
+    */
     deadline: {
       type: Date,
     },
@@ -36,6 +44,6 @@ const TaskSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Task = mongoose.model("Task", TaskSchema);
+const Card = mongoose.model("Card", CardSchema);
 
-module.exports = Task ;
+module.exports = Card;

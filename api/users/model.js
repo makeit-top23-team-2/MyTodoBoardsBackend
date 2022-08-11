@@ -7,16 +7,16 @@ const UserSchema = new mongoose.Schema(
     userName: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
-    avatar:{
+    avatar: {
       type: String,
-      default: 'https://i.imgur.com/elMnIEy.gif'
+      default: "https://i.imgur.com/elMnIEy.gif",
     },
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
@@ -51,4 +51,4 @@ const UserSchema = new mongoose.Schema(
 const User = mongoose.model("User", UserSchema);
 
 //* 4 se exporta el modelo
-module.exports =  User ;
+module.exports = User;
