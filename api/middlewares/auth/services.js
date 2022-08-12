@@ -9,35 +9,35 @@ async function loginUserHandler(req,res){
 
   try {
     const user = await findUserByEmail(email);
-    
+
     if (!user) {
       return res.status(404).json({message: "User not found"});
     }
 
-    const isMatch = await user.comparePasword(password);
+    const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
       return res.status(401).json({ message: "Password does not match" });
     }
 
-    const token = signToken({email: user.email});
+    const token = await signToken({email: user.email});
 
     return res.json({token, profile: user.profile});
 
   }catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e)
   }
 }
 
 async function isAuthenticated(req,res, next){
   //verificas que llega el token
-  const auth = req.headers?.authorization;
-  
+  const auth = req.headers?.token;
+
   if(!auth) {
     return res.status(401).json({ message: "Unauthorized" });
   }
   //tomas el token
-  const token = auth.split(' ')[1];
+  const token = auth;
 
   //validar el token
   const decoded = await verifyToken(token);

@@ -42,9 +42,14 @@ async function createBoardHandler(req, res) {
     return res.status(500).json({ error })
   }
 }
+async function updateBoardHandler(req, res) {
+  const token = req.headers;
+  return res.json({message: "ok", token})
+}
 
 module.exports = {
   getAllBoardHandler,
   getSingleBoardHandler,
   createBoardHandler,
+  updateBoardHandler
 }

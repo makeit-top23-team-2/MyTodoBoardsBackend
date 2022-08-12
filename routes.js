@@ -15,7 +15,7 @@ function routes(app) {
   app.use("/api/cards", card);
   app.use("/api/columns", column);
 
-  app.use("auth/local",auth);
+  app.use("/auth/",auth);
 }
 
 module.exports = routes ;
