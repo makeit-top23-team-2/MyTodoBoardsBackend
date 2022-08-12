@@ -3,6 +3,11 @@
  */
 
 const services = require('./services.js');
+const bcrypt = require('bcrypt');
+require('dotenv').config();
+
+const SALT_ROUNDS = process.env.SALT_ROUNDS;
+
 
 const {
   createUser,
@@ -39,6 +44,9 @@ async function getSingleUserHandler(req, res) {
 
 async function createUserHandler(req, res) {
   const userData = req.body
+  const salt = await bcrypt.genSalt(SALT_ROUNDS);
+  const hash = await bcrypt.hash(userData.password, salt);
+  userData.password = hah;
 
   try {
     const user = await createUser(userData)
