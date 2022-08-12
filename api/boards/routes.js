@@ -1,18 +1,18 @@
 const express = require('express');
-
-const controller = require('./controller.js');
+const { isAuthenticated } = require('../middlewares/auth/services');
 const {
   createBoardHandler,
   getAllBoardHandler,
   getSingleBoardHandler,
-} = controller;
+  updateBoardHandler
+} = require('./controller.js');
 
 const router = express.Router();
 
 router.get('/', getAllBoardHandler)
 router.post('/', createBoardHandler)
 router.get('/:id', getSingleBoardHandler)
-//router.patch('/:id', updateBoardHandler)
-//router.delete('/:id', deleteBoardHandler)
+router.patch('/:id',isAuthenticated, updateBoardHandler)
+//router.delete('/:id',isAuthenticated, deleteBoardHandler)
 
 module.exports =  router ;

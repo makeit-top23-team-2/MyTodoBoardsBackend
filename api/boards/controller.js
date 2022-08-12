@@ -33,7 +33,7 @@ async function getSingleBoardHandler(req, res) {
 async function createBoardHandler(req, res) {
   const { id } = req.params
   const boardData = req.body
-  boardData = {...boardData, owner: id} //*
+  const boardData2 = {...boardData, owner: id} //*
 
   try {
     const board = await createBoard(boardData)
@@ -42,9 +42,14 @@ async function createBoardHandler(req, res) {
     return res.status(500).json({ error })
   }
 }
+async function updateBoardHandler(req, res) {
+  const token = req.headers;
+  return res.json({message: "ok", token})
+}
 
 module.exports = {
   getAllBoardHandler,
   getSingleBoardHandler,
   createBoardHandler,
+  updateBoardHandler
 }
