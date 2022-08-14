@@ -59,4 +59,4 @@ async function isAuthenticated(req,res, next){
   next();
 }
 
-module.exports = {loginUserHandler, isAuthenticated};
+module.exports = { loginUserHandler, isAuthenticated };

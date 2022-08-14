@@ -48,9 +48,15 @@ async function createUserHandler(req, res) {
   }
 }
 
-function updateUserHandler(req, res) {}
+function updateUserHandler(req, res) {
+  console.log('updateUser')
+  res.status(200).json({message: 'ok'});
+}
 
-function deleteUserHandler(req, res) {}
+function deleteUserHandler(req, res) {
+  console.log('deleteUser')
+  res.status(200).json({message: 'ok'});
+}
 
 module.exports = {
   getAllUserHandler,
