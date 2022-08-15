@@ -1,6 +1,5 @@
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
-const { findUserByEmail } = require ('../../users/services');
 
 const KEY = process.env.KEY;
 
@@ -14,7 +13,7 @@ async function verifyToken(token){
 }
 
 async function signToken(payload){
-  const token = await jwt.sign(payload,KEY ,{expiresIn: '1h'} )
+  const token = await jwt.sign(payload, KEY, {expiresIn: '1h'})
   return token;
 }
 
