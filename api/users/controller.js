@@ -49,7 +49,7 @@ async function createUserHandler(req, res) {
 }
 
 function updateUserHandler(req, res) {
-  const { user, newUser } = req.body;
+  const { newUser } = req.body;
   const { id } = req.params;
   try {
     updateUser(id, newUser);

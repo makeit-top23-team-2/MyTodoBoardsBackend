@@ -1,39 +1,20 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
-const userSchema = Joi.object({
-  userName: Joi.string()
-      .alphanum()
-      .min(3)
-      .max(30)
-      .required(),
-
-  password: Joi.string()
-      .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
-      .required(),
-
+const loginSchema = Joi.object({
   email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-      .required(),
-
-  name: Joi.string()
-    .min(2)
-    .max(20)
+    .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
     .required(),
 
-  lastName: Joi.string()
-    .min(2)
-    .max(20)
-    .required(),
-})
-.with('email', 'password')// login
-//.with('userName','password','email','name','lastName'); //at create
+  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
+});
 
-function verifyLogin(req, res, next){
-
-  console.log(userSchema.validate(req.body))
+const validateLogin = (req, res, next) => {
+  const payload = { email, password } = req.body;
+  const { error, value } = loginSchema.validate(payload);
+  if (error) {
+    return res.status(400).json({ error, message: "missing data" });
+  }
   next();
+};
 
-
-}
-
-module.exports = {verifyLogin};
+module.exports = { validateLogin };
