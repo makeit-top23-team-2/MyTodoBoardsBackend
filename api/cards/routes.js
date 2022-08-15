@@ -1,18 +1,21 @@
 const express = require('express');
+const { isAuthenticated } = require('../middlewares/auth/services')
 
 const controller = require('./controller.js');
 const {
   createCardHandler,
   getAllCardHandler,
   getSingleCardHandler,
+  updateCardHandler,
+  deleteCardHandler
 } = controller;
 
 const router = express.Router();
 
 router.get('/', getAllCardHandler)
-router.post('/', createCardHandler)
+router.post('/', isAuthenticated, createCardHandler)
 router.get('/:id', getSingleCardHandler)
-//router.patch('/:id', updateTaskHandler)
-//router.delete('/:id', deleteTaskHandler)
+router.patch('/:id', isAuthenticated, updateCardHandler)
+router.delete('/:id', isAuthenticated, deleteCardHandler)
 
 module.exports =  router ;
