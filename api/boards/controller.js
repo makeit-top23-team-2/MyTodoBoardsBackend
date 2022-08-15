@@ -1,55 +1,77 @@
-const services = require('./services.js');
+const services = require("./services.js");
 
-const {
-  createBoard,
-  getAllBoard,
-  findBoardById
-} = services;
+const { createBoard, getAllBoard, getSingleBoard, updateBoard, deleteBoard } =
+  services;
 
 async function getAllBoardHandler(req, res) {
   try {
-    const boards = await getAllBoard()
-    return res.status(200).json(boards)
+    const boards = await getAllBoard();
+    return res.status(200).json(boards);
   } catch (error) {
-    return res.status(501).json({ error })
+    return res.status(501).json({ error });
   }
 }
 
 async function getSingleBoardHandler(req, res) {
-  const { id } = req.params
+  const { id } = req.params;
   try {
-    const board = await getSingleBoard(id)
+    const board = await getSingleBoard(id);
 
     if (!board) {
-      return res.status(404).json({ message: 'Board not found' })
+      return res.status(404).json({ message: "Board not found" });
     }
 
-    return res.json(board)
+    return res.json(board);
   } catch (error) {
-    return res.status(500).json({ error })
+    return res.status(500).json({ error });
   }
 }
 
 async function createBoardHandler(req, res) {
-  const { id } = req.params
-  const boardData = req.body
-  const boardData2 = {...boardData, owner: id} //*
+  const { id } = req.params;
+  let boardData = req.body;
+  boardData = { ...boardData, owner: id };
 
   try {
-    const board = await createBoard(boardData)
-    return res.status(201).json(board)
+    const board = await createBoard(boardData);
+    return res.status(201).json(board);
   } catch (error) {
-    return res.status(500).json({ error })
+    return res.status(500).json({ error });
   }
 }
 async function updateBoardHandler(req, res) {
-  const token = req.headers;
-  return res.json({message: "ok", token})
+  const { id } = req.params;
+  const boardData = req.body;
+  try {
+    const board = await updateBoard(id, boardData);
+    if (!board) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
+    return res.json(board);
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+}
+
+async function deleteBoardHandler(req, res) {
+  const { id } = req.params;
+  try {
+    const board = await deleteBoard(id);
+    if (!board) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
+    return res.json(board);
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
 }
 
 module.exports = {
   getAllBoardHandler,
   getSingleBoardHandler,
   createBoardHandler,
-  updateBoardHandler
-}
+  updateBoardHandler,
+  deleteBoardHandler,
+};
