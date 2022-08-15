@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    tasks: {
+    cards: {
       type: Array,
       default: [],
     },
