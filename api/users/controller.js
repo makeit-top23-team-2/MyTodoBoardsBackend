@@ -48,9 +48,31 @@ async function createUserHandler(req, res) {
   }
 }
 
-function updateUserHandler(req, res) {}
+async function updateUserHandler(req, res) {
+  const { newUser } = req.body;
+  const { id } = req.params;
+  try {
+    await updateUser(id, newUser);
+    return res.status(200).json({ message: 'User updated' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Error updating user' , error});
+  }
+}
 
-function deleteUserHandler(req, res) {}
+async function deleteUserHandler(req, res) {
+  const  user  = req.user;
+  const { id } = req.params;
+  if (!(user.id === id)){
+    return res.status(401).json({ message: 'unAuthorized' })
+  }
+  try {
+    await deleteUser(id);
+    return res.status(200).json({ message: 'OK' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error });
+  }
+}
 
 module.exports = {
   getAllUserHandler,

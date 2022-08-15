@@ -53,7 +53,7 @@ async function isAuthenticated(req, res, next) {
   }
 
   req.user = user;
-
+  
   next();
 }
 
