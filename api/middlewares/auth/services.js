@@ -3,15 +3,14 @@ const jwt = require("jsonwebtoken");
 const { findUserByEmail } = require("../../users/services");
 const { verifyToken, signToken } = require("./controllers");
 
-
-async function loginUserHandler(req,res){
+async function loginUserHandler(req, res) {
   const { email, password } = req.body;
 
   try {
     const user = await findUserByEmail(email);
 
     if (!user) {
-      return res.status(404).json({message: "User not found"});
+      return res.status(404).json({ message: "User not found" });
     }
 
     const isMatch = await user.comparePassword(password);
@@ -20,20 +19,19 @@ async function loginUserHandler(req,res){
       return res.status(401).json({ message: "Password does not match" });
     }
 
-    const token = await signToken({email: user.email});
+    const token = await signToken({ email: user.email });
 
-    return res.json({token, profile: user.profile});
-
-  }catch (e) {
-    return res.status(500).json(e)
+    return res.json({ token, profile: user.profile });
+  } catch (e) {
+    return res.status(500).json(e);
   }
 }
 
-async function isAuthenticated(req,res, next){
+async function isAuthenticated(req, res, next) {
   //verificas que llega el token
   const auth = req.headers?.token;
 
-  if(!auth) {
+  if (!auth) {
     return res.status(401).json({ message: "Unauthorized" });
   }
   //tomas el token

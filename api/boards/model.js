@@ -10,7 +10,7 @@ const BoardSchema = new mongoose.Schema(
     },
     color: {
       type: String,
-      required: true,
+      default: "blue",
     },
     image: {
       type: String,
@@ -26,7 +26,7 @@ const BoardSchema = new mongoose.Schema(
     },
     columns: {
       type: Array,
-      default: [],
+      ref: "Columns",
     },
     url: {
       type: String,

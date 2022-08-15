@@ -11,11 +11,10 @@ const auth = require("./api/middlewares/auth/routes.js");
 function routes(app) {
   app.use("/api/healthcheck", healthcheck);
   app.use("/api/users", user);
-  app.use("/api/boards",board);
+  app.use("/api/boards", board);
   app.use("/api/cards", card);
   app.use("/api/columns", column);
-
-  app.use("/auth/",auth);
+  app.use("/auth/", auth);
 }
 
-module.exports = routes ;
+module.exports = routes;
