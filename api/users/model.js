@@ -74,6 +74,7 @@ UserSchema.virtual('profile').get(function profile() {
     name,
     lastName,
     email,
+    avatar
   } = this;
 
   return {
@@ -81,6 +82,7 @@ UserSchema.virtual('profile').get(function profile() {
     name,
     lastName,
     email,
+    avatar
   }
 })
 
@@ -89,12 +91,13 @@ UserSchema.methods.comparePassword = async function comparepassword(enteredPassw
 
   try {
     const isMatch = await bcrypt.compare(enteredPassword, user.password);
-    return isMatch;    
+    return isMatch;
   }catch(e){
     next(e);
     return false;
   }
 }
+
 //* 3 se asigna el schema al modelo
 const User = mongoose.model("User", UserSchema);
 
