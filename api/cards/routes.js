@@ -1,4 +1,5 @@
 const express = require('express');
+const { isAuthenticated } = require('../middlewares/auth/services')
 
 const controller = require('./controller.js');
 const {
@@ -12,9 +13,9 @@ const {
 const router = express.Router();
 
 router.get('/', getAllCardHandler)
-router.post('/', createCardHandler)
+router.post('/', isAuthenticated, createCardHandler)
 router.get('/:id', getSingleCardHandler)
-router.patch('/:id', updateCardHandler)
-router.delete('/:id', deleteCardHandler)
+router.patch('/:id', isAuthenticated, updateCardHandler)
+router.delete('/:id', isAuthenticated, deleteCardHandler)
 
 module.exports =  router ;
