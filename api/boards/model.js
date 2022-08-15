@@ -26,7 +26,7 @@ const BoardSchema = new mongoose.Schema(
     },
     columns: {
       type: Array,
-      default: [],
+      ref: "Columns",
     },
     url: {
       type: String,

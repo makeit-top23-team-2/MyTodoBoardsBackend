@@ -10,7 +10,7 @@ const ColumnSchema = new mongoose.Schema(
     },
     color: {
       type: String,
-      required: true,
+      default: "blue",
     },
     board: {
       type: mongoose.Schema.Types.ObjectId,
