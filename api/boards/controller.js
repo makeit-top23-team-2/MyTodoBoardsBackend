@@ -33,10 +33,10 @@ async function getSingleBoardHandler(req, res) {
 async function createBoardHandler(req, res) {
   const { id } = req.params
   const boardData = req.body
-  const boardData2 = {...boardData, owner: id} //*
+  const boardData2 = {...boardData, owner: id} 
 
   try {
-    const board = await createBoard(boardData)
+    const board = await createBoard(boardData2)
     return res.status(201).json(board)
   } catch (error) {
     return res.status(500).json({ error })

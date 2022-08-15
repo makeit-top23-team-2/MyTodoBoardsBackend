@@ -12,11 +12,12 @@ const ColumnSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    /*
     board: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Board",
       required: true,
-    },
+    },*/
     tasks: {
       type: Array,
       default: [],
