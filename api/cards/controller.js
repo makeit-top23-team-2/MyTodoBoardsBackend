@@ -5,7 +5,8 @@ const {
   getAllCard,
   findCardById,
   getSingleCard,
-  updateCard
+  updateCard,
+  deleteCard
 } = services;
 
 async function getAllCardHandler(req, res) {
@@ -55,9 +56,25 @@ async function updateCardHandler(req, res) {
   }
 }
 
+async function deleteCardHandler(req, res) {
+  const { id } = req.params;
+
+  try {
+    const card = await deleteCard(id);
+    if(!card) {
+      return res.status(401).json({ message: 'Card not found' });
+    }
+
+    return res.status(200).json({ message: 'Card deleted' })
+  } catch (error) {
+    return res.status(500).json({ message: 'Error' })
+  }
+}
+
 module.exports = {
   getAllCardHandler,
   getSingleCardHandler,
   createCardHandler,
-  updateCardHandler
+  updateCardHandler,
+  deleteCardHandler
 }

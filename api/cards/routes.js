@@ -5,7 +5,8 @@ const {
   createCardHandler,
   getAllCardHandler,
   getSingleCardHandler,
-  updateCardHandler
+  updateCardHandler,
+  deleteCardHandler
 } = controller;
 
 const router = express.Router();
@@ -14,6 +15,6 @@ router.get('/', getAllCardHandler)
 router.post('/', createCardHandler)
 router.get('/:id', getSingleCardHandler)
 router.patch('/:id', updateCardHandler)
-//router.delete('/:id', deleteTaskHandler)
+router.delete('/:id', deleteCardHandler)
 
 module.exports =  router ;
