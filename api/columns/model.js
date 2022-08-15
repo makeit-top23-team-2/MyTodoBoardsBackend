@@ -12,12 +12,13 @@ const ColumnSchema = new mongoose.Schema(
       type: String,
       default: "blue",
     },
+    
     board: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Board",
       required: true,
     },
-    tasks: {
+    cards: {
       type: Array,
       default: [],
     },

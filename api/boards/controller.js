@@ -32,7 +32,6 @@ async function getSingleBoardHandler(req, res) {
 async function createBoardHandler(req, res) {
   const user = await req.user;
   const tempBoardData = req.body;
-
   const boardData1 = { ...tempBoardData, owner: user.id };
 
   try {
