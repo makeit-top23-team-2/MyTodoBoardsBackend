@@ -97,6 +97,7 @@ UserSchema.methods.comparePassword = async function comparepassword(enteredPassw
     return false;
   }
 }
+
 //* 3 se asigna el schema al modelo
 const User = mongoose.model("User", UserSchema);
 

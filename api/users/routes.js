@@ -4,6 +4,7 @@
 const express = require('express');
 const controller = require('./controller.js');
 
+const { registerLogin } = require('./joiSchema');
 const { isAuthenticated } = require('../middlewares/auth/services');
 const {
   createUserHandler,
@@ -15,8 +16,9 @@ const {
 
 const router = express.Router();
 
+
 router.get('/', getAllUserHandler)
-router.post('/', createUserHandler)
+router.post('/', registerLogin, createUserHandler)
 router.get('/:id', getSingleUserHandler)
 router.patch('/:id',isAuthenticated, updateUserHandler)
 router.delete('/:id', isAuthenticated, deleteUserHandler)
