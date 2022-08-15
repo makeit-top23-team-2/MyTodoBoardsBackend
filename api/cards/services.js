@@ -12,8 +12,13 @@ function createCard(card) {
   return Card.create(card)
 }
 
+function updateCard(id, card) {
+  return Card.findByIdAndUpdate(id, card, {new: true});
+}
+
 module.exports = {
   getAllCard,
   getSingleCard,
-  createCard
+  createCard,
+  updateCard
 }

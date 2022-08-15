@@ -3,7 +3,9 @@ const services = require('./services.js');
 const {
   createCard,
   getAllCard,
-  findCardById
+  findCardById,
+  getSingleCard,
+  updateCard
 } = services;
 
 async function getAllCardHandler(req, res) {
@@ -41,8 +43,21 @@ async function createCardHandler(req, res) {
   }
 }
 
+async function updateCardHandler(req, res) {
+  const { id } = req.params;
+  const cardData = req.body;
+
+  try {
+    const card = await updateCard(id, cardData);
+    return res.status(201).json(card)
+  } catch (error) {
+    return res.status(500)-json({ error })
+  }
+}
+
 module.exports = {
   getAllCardHandler,
   getSingleCardHandler,
   createCardHandler,
+  updateCardHandler
 }
