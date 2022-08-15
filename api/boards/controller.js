@@ -3,7 +3,7 @@ const services = require("./services.js");
 const { createBoard, getAllBoard, getSingleBoard, updateBoard, deleteBoard } =
   services;
 
-async function getAllBoardHandler(req, res) {
+async function getAllBoardHandler(_req, res) {
   try {
     const boards = await getAllBoard();
     return res.status(200).json(boards);
@@ -28,9 +28,10 @@ async function getSingleBoardHandler(req, res) {
 }
 
 async function createBoardHandler(req, res) {
-  const { id } = req.params;
+  const user = await req.user;
+
   let boardData = req.body;
-  boardData = { ...boardData, owner: id };
+  boardData = { ...boardData, owner: user.id };
 
   try {
     const board = await createBoard(boardData);
@@ -41,6 +42,7 @@ async function createBoardHandler(req, res) {
 }
 async function updateBoardHandler(req, res) {
   const { id } = req.params;
+
   const boardData = req.body;
   try {
     const board = await updateBoard(id, boardData);
@@ -56,16 +58,22 @@ async function updateBoardHandler(req, res) {
 
 async function deleteBoardHandler(req, res) {
   const { id } = req.params;
-  try {
-    const board = await deleteBoard(id);
-    if (!board) {
-      return res.status(404).json({ message: "Board not found" });
-    }
+  const user = await req.user;
+  const board = await getSingleBoard(id);
 
-    return res.json(board);
-  } catch (error) {
-    return res.status(500).json({ error });
+  if (user.id == board.owner) {
+    try {
+      const board = await deleteBoard(id);
+      if (!board) {
+        return res.status(404).json({ message: "Board not found" });
+      }
+
+      return res.json({ message: "Board eliminated" });
+    } catch (error) {
+      return res.status(500).json({ error });
+    }
   }
+  return res.status(401).json({ message: "unAuthorized" });
 }
 
 module.exports = {

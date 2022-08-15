@@ -11,7 +11,7 @@ const {
 const router = express.Router();
 
 router.get("/", getAllBoardHandler);
-router.post("/", createBoardHandler);
+router.post("/", isAuthenticated, createBoardHandler);
 router.get("/:id", getSingleBoardHandler);
 router.patch("/:id", isAuthenticated, updateBoardHandler);
 router.delete("/:id", isAuthenticated, deleteBoardHandler);
