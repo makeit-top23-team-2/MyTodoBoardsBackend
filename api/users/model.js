@@ -1,6 +1,9 @@
 //* 1 Se importa mongoose
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+require('dotenv').config();
 
+const { SALT_ROUNDS } = process.env;
 //* 2 Crear el Schema
 const UserSchema = new mongoose.Schema(
   {
@@ -11,7 +14,7 @@ const UserSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: "https://i.imgur.com/elMnIEy.gif",
+      default: 'https://i.imgur.com/elMnIEy.gif',
     },
     email: {
       type: String,
@@ -34,7 +37,7 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    tasks: {
+    cards: {
       type: Array,
       default: [],
     },
@@ -47,8 +50,53 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
+// methods
+
+UserSchema.pre('save', async function save(next) {
+  const user = this;
+
+  try {
+    if (!user.isModified('password')) {
+      next();
+    }
+    const salt = await bcrypt.genSalt(Number(SALT_ROUNDS));
+    const hash = await bcrypt.hash(user.password, salt);
+
+    user.password = hash;
+  } catch (e) {
+    next(e);
+  }
+});
+
+UserSchema.virtual('profile').get(function profile() {
+  const { userName, name, lastName, email, avatar } = this;
+
+  return {
+    userName,
+    name,
+    lastName,
+    email,
+    avatar,
+  };
+});
+
+UserSchema.methods.comparePassword = async function comparepassword(
+  enteredPassword,
+  next
+) {
+  const user = this;
+
+  try {
+    const isMatch = await bcrypt.compare(enteredPassword, user.password);
+    return isMatch;
+  } catch (e) {
+    next(e);
+    return false;
+  }
+};
+
 //* 3 se asigna el schema al modelo
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 //* 4 se exporta el modelo
 module.exports = User;

@@ -1,18 +1,20 @@
 const express = require('express');
+const { isAuthenticated } = require('../middlewares/auth/services');
 
-const controller = require('./controller.js');
+const controller = require('./controller');
+
 const {
   createColumnHandler,
   getAllColumnHandler,
-  getSingleColumnHandler,
+  updateColumnHandler,
+  deleteColumnHandler,
 } = controller;
 
 const router = express.Router();
 
-router.get('/', getAllColumnHandler)
-router.post('/', createColumnHandler)
-router.get('/:id', getSingleColumnHandler)
-//router.patch('/:id', updateColumnHandler)
-//router.delete('/:id', deleteColumnHandler)
+router.get('/', getAllColumnHandler);
+router.post('/', isAuthenticated, createColumnHandler);
+router.patch('/:id', isAuthenticated, updateColumnHandler);
+router.delete('/:id', isAuthenticated, deleteColumnHandler);
 
-module.exports =  router ;
+module.exports = router;

@@ -1,19 +1,29 @@
-const Card = require('./model.js');
+const Card = require('./model');
 
 function getAllCard() {
-  return Card.find({})
+  return Card.find({});
 }
 
 function getSingleCard(id) {
-  return Card.findById(id)
+  return Card.findById(id);
 }
 
 function createCard(card) {
-  return Card.create(card)
+  return Card.create(card);
+}
+
+function updateCard(id, card) {
+  return Card.findByIdAndUpdate(id, card, { new: true });
+}
+
+function deleteCard(id) {
+  return Card.findByIdAndRemove(id);
 }
 
 module.exports = {
   getAllCard,
   getSingleCard,
-  createCard
-}
+  createCard,
+  updateCard,
+  deleteCard,
+};
