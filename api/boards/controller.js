@@ -32,33 +32,25 @@ async function getSingleBoardHandler(req, res) {
 async function createBoardHandler(req, res) {
   const user = await req.user;
   const tempBoardData = req.body;
-  const boardData1 = { ...tempBoardData, owner: user.id };
+  const boardData = { ...tempBoardData, owner: user.id };
 
   try {
-    const boardData2 = await createBoard(boardData1);
+    const board = await createBoard(boardData);
     const ToDo = await createColumn({
       title: "To Do",
-      board: boardData2.id,
+      board: board.id,
     });
     const Doing = await createColumn({
       title: "Doing",
-      board: boardData2.id,
+      board: board.id,
     });
     const Done = await createColumn({
       title: "Done",
-      board: boardData2.id,
+      board: board.id,
     });
-    const columns = [ToDo.id, Doing.id, Done.id];
-    console.log(
-      "🚀 ~ file: controller.js ~ line 53 ~ createBoardHandler ~ columns",
-      columns
-    );
+    const defaultColumns = [ToDo.id, Doing.id, Done.id];
+    board.columns = defaultColumns;
 
-    const board = await updateBoard(boardData2.id, { columns: columns });
-    console.log(
-      "🚀 ~ file: controller.js ~ line 56 ~ createBoardHandler ~ { ...boardData2, columns }",
-      { ...boardData2, columns }
-    );
     return res.status(201).json(board);
   } catch (error) {
     return res.status(500).json({ error });
