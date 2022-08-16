@@ -1,5 +1,5 @@
 const express = require('express');
-import {isAuthenticated} from '../../middleware/auth'
+const { isAuthenticated } = require('../middlewares/auth/services')
 
 const controller = require('./controller.js');
 const {
