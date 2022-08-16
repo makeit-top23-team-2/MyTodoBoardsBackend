@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const BoardSchema = new mongoose.Schema(
   {
@@ -10,14 +10,14 @@ const BoardSchema = new mongoose.Schema(
     },
     color: {
       type: String,
-      default: "blue",
+      default: 'blue',
     },
     image: {
       type: String,
-    },  
+    },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     contributors: {
@@ -26,7 +26,7 @@ const BoardSchema = new mongoose.Schema(
     },
     columns: {
       type: Array,
-      ref: "Columns",
+      ref: 'Columns',
     },
     url: {
       type: String,
@@ -37,6 +37,6 @@ const BoardSchema = new mongoose.Schema(
   }
 );
 
-const Board = mongoose.model("Board", BoardSchema);
+const Board = mongoose.model('Board', BoardSchema);
 
 module.exports = Board;

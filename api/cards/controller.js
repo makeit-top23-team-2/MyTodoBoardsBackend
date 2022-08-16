@@ -1,46 +1,45 @@
-const services = require('./services.js');
+const services = require('./services');
 
 const {
   createCard,
   getAllCard,
-  findCardById,
   getSingleCard,
   updateCard,
-  deleteCard
+  deleteCard,
 } = services;
 
 async function getAllCardHandler(req, res) {
   try {
-    const cards = await getAllCard()
-    return res.status(200).json(cards)
+    const cards = await getAllCard();
+    return res.status(200).json(cards);
   } catch (error) {
-    return res.status(501).json({ error })
+    return res.status(501).json({ error });
   }
 }
 
 async function getSingleCardHandler(req, res) {
-  const { id } = req.params
+  const { id } = req.params;
   try {
-    const Card = await getSingleCard(id)
+    const Card = await getSingleCard(id);
 
     if (!Card) {
-      return res.status(404).json({ message: 'Card not found' })
+      return res.status(404).json({ message: 'Card not found' });
     }
 
-    return res.json(card)
+    return res.json(Card);
   } catch (error) {
-    return res.status(500).json({ error })
+    return res.status(500).json({ error });
   }
 }
 
 async function createCardHandler(req, res) {
-  const cardData = req.body
+  const CardData = req.body;
 
   try {
-    const card = await createCard(CardData)
-    return res.status(201).json(Card)
+    const card = await createCard(CardData);
+    return res.status(201).json(card);
   } catch (error) {
-    return res.status(500).json({ error })
+    return res.status(500).json({ error });
   }
 }
 
@@ -50,9 +49,9 @@ async function updateCardHandler(req, res) {
 
   try {
     const card = await updateCard(id, cardData);
-    return res.status(200).json({ message: 'Card updated' }, card)
+    return res.status(200).json({ message: 'Card updated' }, card);
   } catch (error) {
-    return res.status(500).json({ message: 'Error updating card' })
+    return res.status(500).json({ message: 'Error updating card' });
   }
 }
 
@@ -61,13 +60,13 @@ async function deleteCardHandler(req, res) {
 
   try {
     const card = await deleteCard(id);
-    if(!card) {
+    if (!card) {
       return res.status(401).json({ message: 'Card not found' });
     }
 
-    return res.status(200).json({ message: 'Card deleted' })
+    return res.status(200).json({ message: 'Card deleted' });
   } catch (error) {
-    return res.status(500).json({ message: 'Error' })
+    return res.status(500).json({ message: 'Error' });
   }
 }
 
@@ -76,5 +75,5 @@ module.exports = {
   getSingleCardHandler,
   createCardHandler,
   updateCardHandler,
-  deleteCardHandler
-}
+  deleteCardHandler,
+};

@@ -1,6 +1,6 @@
-const services = require("./services.js");
+const services = require('./services');
 
-const { createColumn } = require("../columns/services.js");
+const { createColumn } = require('../columns/services');
 
 const { createBoard, getAllBoard, getSingleBoard, updateBoard, deleteBoard } =
   services;
@@ -20,7 +20,7 @@ async function getSingleBoardHandler(req, res) {
     const board = await getSingleBoard(id);
 
     if (!board) {
-      return res.status(404).json({ message: "Board not found" });
+      return res.status(404).json({ message: 'Board not found' });
     }
 
     return res.json(board);
@@ -37,15 +37,15 @@ async function createBoardHandler(req, res) {
   try {
     const board = await createBoard(boardData);
     const ToDo = await createColumn({
-      title: "To Do",
+      title: 'To Do',
       board: board.id,
     });
     const Doing = await createColumn({
-      title: "Doing",
+      title: 'Doing',
       board: board.id,
     });
     const Done = await createColumn({
-      title: "Done",
+      title: 'Done',
       board: board.id,
     });
     const defaultColumns = [ToDo.id, Doing.id, Done.id];
@@ -63,7 +63,7 @@ async function updateBoardHandler(req, res) {
   try {
     const board = await updateBoard(id, boardData);
     if (!board) {
-      return res.status(404).json({ message: "Board not found" });
+      return res.status(404).json({ message: 'Board not found' });
     }
 
     return res.json(board);
@@ -75,21 +75,21 @@ async function updateBoardHandler(req, res) {
 async function deleteBoardHandler(req, res) {
   const { id } = req.params;
   const user = await req.user;
-  const board = await getSingleBoard(id);
+  let board = await getSingleBoard(id);
 
-  if (user.id == board.owner) {
+  if (user.id === board.owner.toString()) {
     try {
-      const board = await deleteBoard(id);
+      board = await deleteBoard(id);
       if (!board) {
-        return res.status(404).json({ message: "Board not found" });
+        return res.status(404).json({ message: 'Board not found' });
       }
 
-      return res.json({ message: "Board eliminated" });
+      return res.json({ message: 'Board eliminated' });
     } catch (error) {
       return res.status(500).json({ error });
     }
   }
-  return res.status(401).json({ message: "unAuthorized" });
+  return res.status(401).json({ message: 'unAuthorized' });
 }
 
 module.exports = {

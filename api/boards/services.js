@@ -1,4 +1,4 @@
-const Board = require("./model.js");
+const Board = require('./model');
 
 function getAllBoard() {
   return Board.find({});

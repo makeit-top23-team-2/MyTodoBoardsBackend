@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const ColumnSchema = new mongoose.Schema(
   {
@@ -10,12 +10,12 @@ const ColumnSchema = new mongoose.Schema(
     },
     color: {
       type: String,
-      default: "blue",
+      default: 'blue',
     },
-    
+
     board: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Board",
+      ref: 'Board',
       required: true,
     },
     cards: {
@@ -28,6 +28,6 @@ const ColumnSchema = new mongoose.Schema(
   }
 );
 
-const Column = mongoose.model("Column", ColumnSchema);
+const Column = mongoose.model('Column', ColumnSchema);
 
 module.exports = Column;

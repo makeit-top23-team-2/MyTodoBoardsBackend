@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const CardSchema = new mongoose.Schema(
   {
@@ -14,27 +14,21 @@ const CardSchema = new mongoose.Schema(
     },
     board: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Board",
+      ref: 'Board',
       required: true,
     },
     members: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Users",
+        ref: 'Users',
       },
     ],
-    /* 
-    users: {
-      type: Array,
-      default: []
-    },
-    */
     deadline: {
       type: Date,
     },
     column: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Column",
+      ref: 'Column',
       required: true,
     },
     url: {
@@ -44,6 +38,6 @@ const CardSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Card = mongoose.model("Card", CardSchema);
+const Card = mongoose.model('Card', CardSchema);
 
 module.exports = Card;

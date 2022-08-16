@@ -1,7 +1,5 @@
-const jwt = require("jsonwebtoken");
-
-const { findUserByEmail } = require("../../users/services");
-const { verifyToken, signToken } = require("./controllers");
+const { findUserByEmail } = require('../../users/services');
+const { verifyToken, signToken } = require('./controllers');
 
 async function loginUserHandler(req, res) {
   const { email, password } = req.body;
@@ -10,13 +8,13 @@ async function loginUserHandler(req, res) {
     const user = await findUserByEmail(email);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
-      return res.status(401).json({ message: "Password does not match" });
+      return res.status(401).json({ message: 'Password does not match' });
     }
 
     const token = await signToken({ email: user.email });
@@ -28,20 +26,20 @@ async function loginUserHandler(req, res) {
 }
 
 async function isAuthenticated(req, res, next) {
-  //verificas que llega el token
+  // verificas que llega el token
   const auth = req.headers?.token;
 
   if (!auth) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
-  //tomas el token
+  // tomas el token
   const token = auth;
 
-  //validar el token
+  // validar el token
   const decoded = await verifyToken(token);
 
   if (!decoded) {
-    return res.status(401).json({ message: "unAuthorized" });
+    return res.status(401).json({ message: 'unAuthorized' });
   }
 
   // add user to request
@@ -49,12 +47,13 @@ async function isAuthenticated(req, res, next) {
   const user = await findUserByEmail(email);
 
   if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    return res.status(404).json({ message: 'User not found' });
   }
 
   req.user = user;
-  
+
   next();
+  return null;
 }
 
 module.exports = { loginUserHandler, isAuthenticated };
