@@ -1,5 +1,5 @@
 const express = require('express');
-const { isAuthenticated } = require('../middlewares/auth/services')
+const { isAuthenticated } = require('../middlewares/auth/services');
 
 const controller = require('./controller.js');
 const {
