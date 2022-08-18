@@ -1,5 +1,5 @@
-const { findUserByEmail } = require('../../users/services');
-const { verifyToken, signToken } = require('./controllers');
+const { findUserByEmail } = require('../../users/users.services');
+const { verifyToken, signToken } = require('./auth.controllers');
 
 async function loginUserHandler(req, res) {
   const { email, password } = req.body;
@@ -27,13 +27,13 @@ async function loginUserHandler(req, res) {
 
 async function isAuthenticated(req, res, next) {
   // verificas que llega el token
-  const auth = req.headers?.token;
+  const auth = req.headers?.authorization;
 
   if (!auth) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
   // tomas el token
-  const token = auth;
+  const token = auth.split(' ')[1];
 
   // validar el token
   const decoded = await verifyToken(token);

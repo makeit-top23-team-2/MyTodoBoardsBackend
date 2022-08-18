@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const { loginUserHandler } = require('./services');
-const { validateLogin } = require('../../users/joiSchema');
+const { loginUserHandler } = require('./auth.services');
+const { validateLogin } = require('../../users/users.joiSchema');
 
 const router = Router();
 

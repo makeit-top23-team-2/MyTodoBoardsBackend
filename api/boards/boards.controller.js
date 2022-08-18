@@ -1,6 +1,6 @@
-const services = require('./services');
+const services = require('./boards.services');
 
-const { createColumn } = require('../columns/services');
+const { createColumn } = require('../columns/columns.services');
 
 const { createBoard, getAllBoard, getSingleBoard, updateBoard, deleteBoard } =
   services;
@@ -51,6 +51,8 @@ async function createBoardHandler(req, res) {
     const defaultColumns = [ToDo.id, Doing.id, Done.id];
     board.columns = defaultColumns;
 
+    await board.save();
+
     return res.status(201).json(board);
   } catch (error) {
     return res.status(500).json({ error });
@@ -59,9 +61,10 @@ async function createBoardHandler(req, res) {
 async function updateBoardHandler(req, res) {
   const { id } = req.params;
 
-  const boardData = req.body;
+  const updateBoardData = req.body;
   try {
-    const board = await updateBoard(id, boardData);
+    const board = await updateBoard(id, updateBoardData);
+
     if (!board) {
       return res.status(404).json({ message: 'Board not found' });
     }

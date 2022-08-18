@@ -1,12 +1,7 @@
-const services = require('./services');
+const services = require('./users.services');
 
-const {
-  createUser,
-  getAllUser,
-  getSingleUser,
-  updateUser,
-  deleteUser,
-} = services;
+const { createUser, getAllUser, getSingleUser, updateUser, deleteUser } =
+  services;
 
 async function getAllUserHandler(req, res) {
   try {

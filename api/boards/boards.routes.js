@@ -1,12 +1,12 @@
 const express = require('express');
-const { isAuthenticated } = require('../middlewares/auth/services');
+const { isAuthenticated } = require('../middlewares/auth/auth.services');
 const {
   createBoardHandler,
   getAllBoardHandler,
   getSingleBoardHandler,
   updateBoardHandler,
   deleteBoardHandler,
-} = require('./controller');
+} = require('./boards.controller');
 
 const router = express.Router();
 
