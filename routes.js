@@ -2,11 +2,11 @@
  * Main application routes
  */
 const healthcheck = require('./api/healthcheck/index');
-const user = require('./api/users/routes');
-const board = require('./api/boards/routes');
-const card = require('./api/cards/routes');
-const column = require('./api/columns/routes');
-const auth = require('./api/middlewares/auth/routes');
+const user = require('./api/users/users.routes');
+const board = require('./api/boards/boards.routes');
+const card = require('./api/cards/cards.routes');
+const column = require('./api/columns/columns.routes');
+const auth = require('./api/middlewares/auth/auth.routes');
 
 function routes(app) {
   app.use('/api/healthcheck', healthcheck);

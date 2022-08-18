@@ -1,4 +1,4 @@
-const Column = require('./model');
+const Column = require('./columns.model');
 
 function getAllColumn() {
   return Column.find({});

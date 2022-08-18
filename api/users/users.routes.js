@@ -2,10 +2,10 @@
  * User API
  */
 const express = require('express');
-const controller = require('./controller');
+const controller = require('./users.controller');
 
-const { registerLogin } = require('./joiSchema');
-const { isAuthenticated } = require('../middlewares/auth/services');
+const { registerLogin } = require('./users.joiSchema');
+const { isAuthenticated } = require('../middlewares/auth/auth.services');
 
 const {
   createUserHandler,
