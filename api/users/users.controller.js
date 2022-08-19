@@ -49,12 +49,13 @@ async function createUserHandler(req, res) {
     const message = {
       from: '"no-reply" <clon.frello@gmail.com>', // sender address
       to: user.email, // list of receivers
-      subject: 'Welcome to Trello! Activate your Account Now.', // Subject line
+      subject: 'Welcome to Trello!', // Subject line
+      preheader: 'Activate your Account Now.',
       template_id: 'd-a6a296f04ab4420d87f8758c4b635fbb', // template id
       dynamic_template_data: {
-        name: user.profile.name.capitalize(),
-        lastName: user.profile.lastName.capitalize(),
-        url: `${process.env.FRONTEND_URL}/ActivateAccount/${hash}`,
+        name: user.name.capitalize(),
+        lastName: user.lastName.capitalize(),
+        url: `${process.env.FRONTEND_URL}/activate-account/${hash}`,
       },
     };
 
