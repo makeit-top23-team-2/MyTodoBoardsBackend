@@ -12,6 +12,10 @@ function findUserByEmail(email) {
   return User.findOne({ email });
 }
 
+function findOneUser(query) {
+  return User.findOne(query);
+}
+
 function createUser(user) {
   return User.create(user);
 }
@@ -28,6 +32,7 @@ module.exports = {
   getAllUser,
   getSingleUser,
   findUserByEmail,
+  findOneUser,
   createUser,
   updateUser,
   deleteUser,

@@ -44,6 +44,12 @@ const UserSchema = new mongoose.Schema(
     url: {
       type: String,
     },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+    passwordResetActivationToken: String,
+    passwordResetActivationExpires: Date,
   },
   {
     timestamps: true,
