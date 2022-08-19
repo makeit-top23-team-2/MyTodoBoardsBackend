@@ -44,6 +44,7 @@ async function createUserHandler(req, res) {
     userData.passwordResetActivationExpires = Date.now() + 3_600_000 * 24; // 24 hour
 
     const user = await createUser(userData);
+
     // Send email to user
     const message = {
       from: '"no-reply" <clon.frello@gmail.com>', // sender address
@@ -58,10 +59,6 @@ async function createUserHandler(req, res) {
     };
 
     await sendMailSendGrid(message);
-    console.log(
-      '🚀 ~ file: users.controller.js ~ line 59 ~ createUserHandler ~ message',
-      message
-    );
 
     return res.status(201).json(user);
   } catch (error) {
