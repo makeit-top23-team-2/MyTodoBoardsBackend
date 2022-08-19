@@ -1,5 +1,5 @@
 const express = require('express');
-const { isAuthenticated } = require('../middlewares/auth/auth.services');
+const { isAuthenticated } = require('../../auth/auth.services');
 const {
   createBoardHandler,
   getAllBoardHandler,

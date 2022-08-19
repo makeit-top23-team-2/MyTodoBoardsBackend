@@ -6,7 +6,7 @@ const user = require('./api/users/users.routes');
 const board = require('./api/boards/boards.routes');
 const card = require('./api/cards/cards.routes');
 const column = require('./api/columns/columns.routes');
-const auth = require('./api/middlewares/auth/auth.routes');
+const authLocal = require('./auth/local/local.routes');
 
 function routes(app) {
   app.use('/api/healthcheck', healthcheck);
@@ -14,7 +14,9 @@ function routes(app) {
   app.use('/api/boards', board);
   app.use('/api/cards', card);
   app.use('/api/columns', column);
-  app.use('/auth/', auth);
+
+  // auth routes
+  app.use('/auth/local', authLocal);
 }
 
 module.exports = routes;
