@@ -54,7 +54,7 @@ async function createUserHandler(req, res) {
       dynamic_template_data: {
         name: user.profile.name.capitalize(),
         lastName: user.profile.lastName.capitalize(),
-        url: `${process.env.FRONTEND_URL}/verify-account/${hash}`,
+        url: `${process.env.FRONTEND_URL}/ActivateAccount/${hash}`,
       },
     };
 

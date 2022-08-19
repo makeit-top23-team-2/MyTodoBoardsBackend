@@ -37,18 +37,18 @@ async function veryfyAccountHandler(req, res) {
   const { token } = req.params;
 
   try {
-    const user = await findOneUser({ passwordResetToken: token });
+    const user = await findOneUser({ passwordResetActivationToken: token });
 
     if (!user) {
       return res.status(404).json({ message: 'Invalid token' });
     }
 
-    if (Date.now() > user.passwordResetExpires) {
+    if (Date.now() > user.passwordResetActivationExpires) {
       return res.status(404).json({ message: 'Token expired' });
     }
 
-    user.passwordResetToken = null;
-    user.passwordResetExpires = null;
+    user.passwordResetActivationToken = null;
+    user.passwordResetActivationExpires = null;
     user.isActive = true;
 
     await user.save();
