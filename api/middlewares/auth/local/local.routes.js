@@ -12,6 +12,6 @@ const router = Router();
 router.post('/login', loginUserHandler);
 // router.post('/change-password', changePasswordHandler);
 // router.post('/forgot-password', forgotPasswordHandler);
-router.get('/verify-account/:token', veryfyAccountHandler);
+router.get('/ActivateAccount/:token', veryfyAccountHandler);
 
 module.exports = router;
