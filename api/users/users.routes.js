@@ -5,7 +5,7 @@ const express = require('express');
 const controller = require('./users.controller');
 
 const { registerLogin } = require('./users.joiSchema');
-const { isAuthenticated } = require('../middlewares/auth/auth.services');
+const { isAuthenticated } = require('../../auth/auth.services');
 
 const {
   createUserHandler,

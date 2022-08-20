@@ -5,6 +5,14 @@ const configExpress = require('./config/express');
 const routesConfig = require('./routes');
 const connectDb = require('./config/database');
 
+// eslint-disable-next-line no-extend-native
+Object.defineProperty(String.prototype, 'capitalize', {
+  value() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  },
+  enumerable: false,
+});
+
 const app = express();
 
 const PORT = process.env.PORT || 8080;
