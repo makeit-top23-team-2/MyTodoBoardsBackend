@@ -4,9 +4,9 @@ function getAllUser() {
   return User.find({});
 }
 
-function getSingleUser(id) {
+/* function getSingleUser(id) {
   return User.findById(id);
-}
+} */
 
 function findUserByEmail(email) {
   return User.findOne({ email });
@@ -30,7 +30,7 @@ function deleteUser(id) {
 
 module.exports = {
   getAllUser,
-  getSingleUser,
+  // getSingleUser,
   findUserByEmail,
   findOneUser,
   createUser,

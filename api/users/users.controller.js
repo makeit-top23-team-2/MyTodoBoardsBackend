@@ -2,31 +2,35 @@ const crypto = require('crypto');
 
 const services = require('./users.services');
 
-const { createUser, getAllUser, getSingleUser, updateUser, deleteUser } =
+const { createUser, getAllUser, findUserByEmail, updateUser, deleteUser } =
   services;
 
 const { sendMailSendGrid } = require('../../utils/mail');
 
 async function getAllUserHandler(req, res) {
   try {
+    console.log('Showing all users');
     const users = await getAllUser();
     return res.status(200).json(users);
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
   }
 }
 
-async function getSingleUserHandler(req, res) {
-  const { id } = req.params;
+async function getUserByEmailHandler(req, res) {
+  const { email } = req.params;
   try {
-    const user = await getSingleUser(id);
+    const user = await findUserByEmail(email);
 
     if (!user) {
+      console.log('User not found');
       return res.status(404).json({ message: 'User not found' });
     }
-
+    console.log('Showing user', user);
     return res.json(user);
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
   }
 }
@@ -60,9 +64,10 @@ async function createUserHandler(req, res) {
     };
 
     await sendMailSendGrid(message);
-
-    return res.status(201).json(user);
+    console.log('User created successfully', user);
+    return res.status(201).json(user.profile);
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
   }
 }
@@ -72,8 +77,10 @@ async function updateUserHandler(req, res) {
   const { id } = req.params;
   try {
     await updateUser(id, newUser);
+    console.log('User id:', id, 'Data updated:', newUser);
     return res.status(200).json({ message: 'User updated' });
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ message: 'Error updating user', error });
   }
 }
@@ -82,19 +89,22 @@ async function deleteUserHandler(req, res) {
   const { user } = req;
   const { id } = req.params;
   if (!(user.id === id)) {
+    console.log('Cannot delete another user than yourself');
     return res.status(401).json({ message: 'unAuthorized' });
   }
   try {
     await deleteUser(id);
+    console.log(`User ${id} eliminated`);
     return res.status(200).json({ message: 'User eliminated' });
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
   }
 }
 
 module.exports = {
   getAllUserHandler,
-  getSingleUserHandler,
+  getUserByEmailHandler,
   createUserHandler,
   updateUserHandler,
   deleteUserHandler,

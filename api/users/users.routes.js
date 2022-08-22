@@ -11,7 +11,7 @@ const {
   createUserHandler,
   deleteUserHandler,
   getAllUserHandler,
-  getSingleUserHandler,
+  getUserByEmailHandler,
   updateUserHandler,
 } = controller;
 
@@ -19,7 +19,7 @@ const router = express.Router();
 
 router.get('/', getAllUserHandler);
 router.post('/', registerLogin, createUserHandler);
-router.get('/:id', getSingleUserHandler);
+router.get('/:email', getUserByEmailHandler);
 router.patch('/:id', isAuthenticated, updateUserHandler);
 router.delete('/:id', isAuthenticated, deleteUserHandler);
 
