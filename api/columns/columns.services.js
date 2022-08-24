@@ -20,10 +20,20 @@ function deleteColumn(id) {
   return Column.findByIdAndDelete(id);
 }
 
+function getColumnByBoard(id) {
+  return Column.find({ board: id });
+}
+
+function createColumnByBoard(id, column) {
+  return Column.create({ ...column, board: id });
+}
+
 module.exports = {
   getAllColumn,
   getSingleColumn,
   createColumn,
   updateColumn,
   deleteColumn,
+  getColumnByBoard,
+  createColumnByBoard,
 };

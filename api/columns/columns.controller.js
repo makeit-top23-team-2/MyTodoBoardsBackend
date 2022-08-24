@@ -6,6 +6,8 @@ const {
   getSingleColumn,
   updateColumn,
   deleteColumn,
+  getColumnByBoard,
+  createColumnByBoard,
 } = services;
 
 async function getAllColumnHandler(req, res) {
@@ -82,10 +84,41 @@ async function deleteColumnHandler(req, res) {
   }
 }
 
+async function getColumnByBoardHandler(req, res) {
+  const { id } = req.params;
+  try {
+    const columns = await getColumnByBoard(id);
+    if (!columns) {
+      console.log('Columns not found');
+      return res.status(404).json({ message: 'Columns not found' });
+    }
+    console.log('Showing columns', columns);
+    return res.json(columns);
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(500).json({ error });
+  }
+}
+
+async function createColumnByBoardHandler(req, res) {
+  const { id } = req.params;
+  const columnData = req.body;
+  try {
+    const column = await createColumnByBoard(id, columnData);
+    console.log('Column created', column);
+    return res.status(201).json(column);
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(500).json({ error });
+  }
+}
+
 module.exports = {
   getAllColumnHandler,
   getSingleColumnHandler,
   createColumnHandler,
   updateColumnHandler,
   deleteColumnHandler,
+  getColumnByBoardHandler,
+  createColumnByBoardHandler,
 };
