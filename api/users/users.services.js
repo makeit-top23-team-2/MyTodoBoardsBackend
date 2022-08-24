@@ -12,8 +12,8 @@ function findUserByEmail(email) {
   return User.findOne({ email });
 }
 
-function findOneUser(query) {
-  return User.findOne(query);
+function findUserByUserName(userName) {
+  return User.findOne({ userName });
 }
 
 function createUser(user) {
@@ -32,7 +32,7 @@ module.exports = {
   getAllUser,
   // getSingleUser,
   findUserByEmail,
-  findOneUser,
+  findUserByUserName,
   createUser,
   updateUser,
   deleteUser,

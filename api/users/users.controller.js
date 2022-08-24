@@ -2,8 +2,14 @@ const crypto = require('crypto');
 
 const services = require('./users.services');
 
-const { createUser, getAllUser, findUserByEmail, updateUser, deleteUser } =
-  services;
+const {
+  createUser,
+  getAllUser,
+  findUserByEmail,
+  findUserByUserName,
+  updateUser,
+  deleteUser,
+} = services;
 
 const { sendMailSendGrid } = require('../../utils/mail');
 
@@ -22,6 +28,23 @@ async function getUserByEmailHandler(req, res) {
   const { email } = req.params;
   try {
     const user = await findUserByEmail(email);
+
+    if (!user) {
+      console.log('User not found');
+      return res.status(404).json({ message: 'User not found' });
+    }
+    console.log('Showing user', user);
+    return res.json(user);
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(500).json({ error });
+  }
+}
+
+async function findUserByUserNameHandler(req, res) {
+  const { userName } = req.params;
+  try {
+    const user = await findUserByUserName(userName);
 
     if (!user) {
       console.log('User not found');
@@ -105,6 +128,7 @@ async function deleteUserHandler(req, res) {
 module.exports = {
   getAllUserHandler,
   getUserByEmailHandler,
+  findUserByUserNameHandler,
   createUserHandler,
   updateUserHandler,
   deleteUserHandler,
