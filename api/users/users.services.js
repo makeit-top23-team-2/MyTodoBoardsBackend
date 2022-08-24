@@ -5,15 +5,19 @@ function getAllUser() {
 }
 
 function getSingleUser(id) {
-  return User.findById(id);
-}
-
-function findUserByEmail(email) {
-  return User.findOne({ email });
+  return User.findById(id).populate({path: 'cards', select: 'title'});
 }
 
 function findOneUser(query) {
   return User.findOne(query);
+}
+
+function findUserByEmail(email) {
+  return User.findOne({ email }).populate({ path: 'boards', select: 'title' });
+}
+
+function findUserByUserName(userName) {
+  return User.findOne({ userName });
 }
 
 function createUser(user) {
@@ -28,11 +32,30 @@ function deleteUser(id) {
   return User.findByIdAndRemove(id);
 }
 
+function addBoardToUser(id, boardId) {
+  return User.findByIdAndUpdate(
+    id,
+    { $push: { boards: boardId } },
+    { new: true },
+  );
+}
+
+function deleteBoardAtUser(id, boardId) {
+  return User.findByIdAndUpdate(
+    id,
+    { $pull: { boards: boardId } },
+    { multi: true }
+  );
+}
+
 module.exports = {
-  getAllUser,
   getSingleUser,
-  findUserByEmail,
+  getAllUser,
   findOneUser,
+  findUserByEmail,
+  findUserByUserName,
+  addBoardToUser,
+  deleteBoardAtUser,
   createUser,
   updateUser,
   deleteUser,

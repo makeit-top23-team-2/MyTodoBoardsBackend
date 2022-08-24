@@ -5,7 +5,7 @@ function getAllBoard() {
 }
 
 function getSingleBoard(id) {
-  return Board.findById(id);
+  return Board.findById(id).populate({ path: 'owner', select: 'userName' });
 }
 
 function createBoard(board) {
@@ -20,10 +20,28 @@ function deleteBoard(id) {
   return Board.findByIdAndDelete(id);
 }
 
+function addColumnToBoard(id, columnId) {
+  return Board.findByIdAndUpdate(
+    id,
+    { $push: { columns: columnId } },
+    { new: true }
+  );
+}
+
+function deleteColumnAtBoard(id, columnId) {
+  return Board.findByIdAndUpdate(
+    id,
+    { $pull: { columns: columnId } },
+    { multi: true }
+  );
+}
+
 module.exports = {
   getAllBoard,
   getSingleBoard,
   createBoard,
   updateBoard,
   deleteBoard,
+  addColumnToBoard,
+  deleteColumnAtBoard,
 };

@@ -11,16 +11,19 @@ const { signToken } = require('../auth.services');
 
 async function changePasswordHandler(req, res) {
   const { token } = req.params;
+
   const { password } = req.body;
 
   try {
     const user = await findOneUser({ passwordResetActivationToken: token });
-
+    console.log('User found', user);
     if (!user) {
+      console.log('Invalid token');
       return res.status(404).json({ message: 'Invalid token' });
     }
 
     if (Date.now() > user.passwordResetActivationExpires) {
+      console.log('Token expired');
       return res.status(404).json({ message: 'Token expired' });
     }
 
@@ -30,14 +33,15 @@ async function changePasswordHandler(req, res) {
 
     await user.save();
 
-    const jwtoken = signToken({ email: user.email });
-
+    const jwtoken = await signToken({ email: user.email });
+    console.log('Password has been reset successfully');
     return res.status(200).json({
       token: jwtoken,
       profile: user.profile,
       message: 'Password has been reset successfully',
     });
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
   }
 }
@@ -48,12 +52,16 @@ async function forgotPasswordHandler(req, res) {
   try {
     const user = await findUserByEmail(email);
     if (!user) {
+      console.log('User not found');
       return res.status(404).json({ message: 'User not found' });
     }
     const hash = crypto.createHash('sha256').update(email).digest('hex');
 
     user.passwordResetActivationToken = hash;
+
     user.passwordResetActivationExpires = Date.now() + 3_600_000; // 1 hour
+
+    await user.save();
 
     // Send email to user
     const message = {
@@ -70,11 +78,12 @@ async function forgotPasswordHandler(req, res) {
     };
 
     await sendMailSendGrid(message);
-
+    console.log('An email was sent to change the password');
     return res
       .status(200)
       .json({ message: 'An email was sent to change the password' });
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
   }
 }
@@ -86,20 +95,23 @@ async function loginUserHandler(req, res) {
     const user = await findUserByEmail(email);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      console.log('User not found');
+      return res.status(404).json({ message: 'Invalid Credentials' });
     }
 
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
-      return res.status(401).json({ message: 'Password does not match' });
+      console.log('Incorrect password');
+      return res.status(401).json({ message: 'Invalid Credentials' });
     }
 
     const token = await signToken({ email: user.email });
-
+    console.log('User correctly loged', user);
     return res.json({ token, profile: user.profile });
-  } catch (e) {
-    return res.status(500).json(e);
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(500).json(error);
   }
 }
 
@@ -110,10 +122,12 @@ async function veryfyAccountHandler(req, res) {
     const user = await findOneUser({ passwordResetActivationToken: token });
 
     if (!user) {
+      console.log('Invalid token');
       return res.status(404).json({ message: 'Invalid token' });
     }
 
     if (Date.now() > user.passwordResetActivationExpires) {
+      console.log('Token expired');
       return res.status(404).json({ message: 'Token expired' });
     }
 
@@ -123,14 +137,15 @@ async function veryfyAccountHandler(req, res) {
 
     await user.save();
 
-    const jwtoken = signToken({ email: user.email });
-
+    const jwtoken = await signToken({ email: user.email });
+    console.log('Account activated', user);
     return res.status(200).json({
       token: jwtoken,
       profile: user.profile,
       message: 'Account activated',
     });
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
   }
 }

@@ -22,7 +22,7 @@ async function signToken(payload) {
 
 async function isAuthenticated(req, res, next) {
   // verificas que llega el token
-  const auth = req.headers?.authorization;
+  const auth = req.headers? req.headers.authorization: null;
 
   if (!auth) {
     return res.status(401).json({ message: 'Unauthorized' });
