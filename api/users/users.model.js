@@ -33,14 +33,18 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    boards: {
-      type: Array,
-      default: [],
-    },
-    cards: {
-      type: Array,
-      default: [],
-    },
+    boards: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Board',
+      },
+    ],
+    cards: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Card',
+      },
+    ],
     url: {
       type: String,
     },

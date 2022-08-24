@@ -137,7 +137,7 @@ async function veryfyAccountHandler(req, res) {
 
     await user.save();
 
-    const jwtoken = signToken({ email: user.email });
+    const jwtoken = await signToken({ email: user.email });
     console.log('Account activated', user);
     return res.status(200).json({
       token: jwtoken,
