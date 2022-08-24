@@ -9,6 +9,7 @@ const { isAuthenticated } = require('../../auth/auth.services');
 
 const {
   createUserHandler,
+  getSingleUserHandler,
   deleteUserHandler,
   getAllUserHandler,
   getUserByEmailHandler,
@@ -19,6 +20,7 @@ const {
 const router = express.Router();
 
 router.get('/', getAllUserHandler);
+router.get('/:id', getSingleUserHandler);
 router.get('/user/:userName', findUserByUserNameHandler);
 router.post('/', registerLogin, createUserHandler);
 router.get('/:email', getUserByEmailHandler);

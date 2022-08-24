@@ -7,6 +7,7 @@ const {
   getAllUser,
   findUserByEmail,
   findUserByUserName,
+  getSingleUser,
   updateUser,
   deleteUser,
 } = services;
@@ -23,7 +24,20 @@ async function getAllUserHandler(req, res) {
     return res.status(500).json({ error });
   }
 }
+async function getSingleUserHandler(req, res) {
+  const { id } = req.params;
+  try {
+    const user = await getSingleUser(id);
 
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
+}
 async function getUserByEmailHandler(req, res) {
   const { email } = req.params;
   try {
@@ -127,9 +141,11 @@ async function deleteUserHandler(req, res) {
 
 module.exports = {
   getAllUserHandler,
+  getSingleUserHandler,
   getUserByEmailHandler,
   findUserByUserNameHandler,
   createUserHandler,
   updateUserHandler,
   deleteUserHandler,
 };
+

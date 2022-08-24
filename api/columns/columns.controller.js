@@ -1,5 +1,7 @@
 const services = require('./columns.services');
 
+const {addColumnToBoard, deleteColumnAtBoard} = require('../boards/boards.services')
+
 const {
   createColumn,
   getAllColumn,
@@ -43,6 +45,7 @@ async function createColumnHandler(req, res) {
   columnData = { ...columnData, board: id };
   try {
     const column = await createColumn(columnData);
+    await addColumnToBoard(id,column.id)
     console.log('Column created', column);
     return res.status(201).json(column);
   } catch (error) {
@@ -71,13 +74,15 @@ async function updateColumnHandler(req, res) {
 async function deleteColumnHandler(req, res) {
   const { id } = req.params;
   try {
-    const column = await deleteColumn(id);
+    const column = await getSingleColumn(id)
     if (!column) {
       console.log('Column not found');
       return res.status(404).json({ message: 'Column not found' });
     }
+    await deleteColumnAtBoard(id, column.board);
+    await deleteColumn(id);
     console.log(`Column ${id} eliminated`);
-    return res.json(column);
+    return res.json({message: "Column deleted successfully"});
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
