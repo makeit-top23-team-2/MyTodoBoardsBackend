@@ -12,12 +12,14 @@ const {
   deleteUserHandler,
   getAllUserHandler,
   getUserByEmailHandler,
+  findUserByUserNameHandler,
   updateUserHandler,
 } = controller;
 
 const router = express.Router();
 
 router.get('/', getAllUserHandler);
+router.get('/user/:userName', findUserByUserNameHandler);
 router.post('/', registerLogin, createUserHandler);
 router.get('/:email', getUserByEmailHandler);
 router.patch('/:id', isAuthenticated, updateUserHandler);
