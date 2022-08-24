@@ -4,16 +4,16 @@ function getAllUser() {
   return User.find({});
 }
 
-function getSingleUser(id) {
+/* function getSingleUser(id) {
   return User.findById(id);
-}
+} */
 
 function findUserByEmail(email) {
   return User.findOne({ email });
 }
 
-function findOneUser(query) {
-  return User.findOne(query);
+function findUserByUserName(userName) {
+  return User.findOne({ userName });
 }
 
 function createUser(user) {
@@ -30,9 +30,9 @@ function deleteUser(id) {
 
 module.exports = {
   getAllUser,
-  getSingleUser,
+  // getSingleUser,
   findUserByEmail,
-  findOneUser,
+  findUserByUserName,
   createUser,
   updateUser,
   deleteUser,
