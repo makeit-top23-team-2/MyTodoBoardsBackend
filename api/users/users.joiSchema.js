@@ -15,6 +15,7 @@ function validateLogin(req, res, next) {
   const payload = { email, password };
   const { error } = loginSchema.validate(payload);
   if (error) {
+    console.error(error);
     return res.status(400).json({ error, message: 'missing data' });
   }
   next();
@@ -42,6 +43,7 @@ function registerLogin(req, res, next) {
   const payload = { email, password, name, lastName, userName };
   const { error } = registerSchema.validate(payload);
   if (error) {
+    console.error(error);
     return res.status(400).json({ error, message: 'missing data' });
   }
   next();
