@@ -2,16 +2,37 @@ const services = require('./boards.services');
 
 const { createColumn } = require('../columns/columns.services');
 
-const { addBoardToUser, deleteBoardAtUser } = require('../users/users.services');
+const {
+  addBoardToUser,
+  deleteBoardAtUser,
+} = require('../users/users.services');
 
-const { createBoard, getAllBoard, getSingleBoard, updateBoard, deleteBoard } =
-  services;
+const {
+  createBoard,
+  getAllBoard,
+  getSingleBoard,
+  updateBoard,
+  deleteBoard,
+  getAllUserBoards,
+} = services;
 
 async function getAllBoardHandler(_req, res) {
   try {
     const boards = await getAllBoard();
     console.log('Showing all boards');
     return res.status(200).json(boards);
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(501).json({ error });
+  }
+}
+
+async function getAllUserBoardsHandler(req, res) {
+  const { ownerId } = req.params;
+  try {
+    const userBoards = await getAllUserBoards(ownerId);
+    console.log('Showing all User boards');
+    return res.status(200).json(userBoards);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(501).json({ error });
@@ -54,10 +75,10 @@ async function createBoardHandler(req, res) {
       title: 'Done',
       board: board.id,
     });
-    const defaultColumns = [todo.id, doing.id, done.id]
+    const defaultColumns = [todo.id, doing.id, done.id];
     board.columns = defaultColumns;
     await board.save();
-    await addBoardToUser(user.id,board.id )
+    await addBoardToUser(user.id, board.id);
     console.log('Board created');
     return res.status(201).json(board);
   } catch (error) {
@@ -91,8 +112,7 @@ async function deleteBoardHandler(req, res) {
 
   if (user.id === board.owner.id.toString()) {
     try {
-
-      await deleteBoardAtUser(user.id,board.id )
+      await deleteBoardAtUser(user.id, board.id);
       board = await deleteBoard(id);
       if (!board) {
         console.log('Board not found');
@@ -115,4 +135,5 @@ module.exports = {
   createBoardHandler,
   updateBoardHandler,
   deleteBoardHandler,
+  getAllUserBoardsHandler,
 };

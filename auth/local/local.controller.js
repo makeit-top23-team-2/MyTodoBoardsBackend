@@ -106,9 +106,9 @@ async function loginUserHandler(req, res) {
       return res.status(401).json({ message: 'Invalid Credentials' });
     }
 
-    const token = await signToken({ email: user.email });
+    const jwtoken = await signToken({ email: user.email });
     console.log('User correctly loged', user);
-    return res.json({ token, profile: user.profile });
+    return res.json({ jwtoken, profile: user.profile });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json(error);
@@ -140,7 +140,7 @@ async function veryfyAccountHandler(req, res) {
     const jwtoken = await signToken({ email: user.email });
     console.log('Account activated', user);
     return res.status(200).json({
-      token: jwtoken,
+      jwtoken,
       profile: user.profile,
       message: 'Account activated',
     });

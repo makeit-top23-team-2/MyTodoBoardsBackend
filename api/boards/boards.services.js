@@ -5,7 +5,14 @@ function getAllBoard() {
 }
 
 function getSingleBoard(id) {
-  return Board.findById(id).populate({ path: 'owner', select: 'userName' });
+  return Board.findById(id).populate(
+    { path: 'owner', select: 'userName' },
+    { path: 'columns', select: 'title' }
+  );
+}
+
+function getAllUserBoards(ownerId) {
+  return Board.find(ownerId);
 }
 
 function createBoard(board) {
@@ -44,4 +51,5 @@ module.exports = {
   deleteBoard,
   addColumnToBoard,
   deleteColumnAtBoard,
+  getAllUserBoards,
 };

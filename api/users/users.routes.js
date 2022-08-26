@@ -23,7 +23,7 @@ router.get('/', getAllUserHandler);
 router.get('/:id', getSingleUserHandler);
 router.get('/user/:userName', findUserByUserNameHandler);
 router.post('/', registerLogin, createUserHandler);
-router.get('/:email', getUserByEmailHandler);
+router.get('/email/:email', getUserByEmailHandler);
 router.patch('/:id', isAuthenticated, updateUserHandler);
 router.delete('/:id', isAuthenticated, deleteUserHandler);
 
