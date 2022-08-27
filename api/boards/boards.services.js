@@ -11,8 +11,8 @@ function getSingleBoard(id) {
   );
 }
 
-function getAllUserBoards(ownerId) {
-  return Board.find(ownerId);
+function getAllUserBoards(owner) {
+  return Board.find({ owner });
 }
 
 function createBoard(board) {

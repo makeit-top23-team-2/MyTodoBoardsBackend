@@ -111,7 +111,7 @@ async function createUserHandler(req, res) {
 
 async function updateUserHandler(req, res) {
   const { newUser } = req.body;
-  const { id } = req.params;
+  const { id } = req.user;
   try {
     await updateUser(id, newUser);
     console.log('User id:', id, 'Data updated:', newUser);

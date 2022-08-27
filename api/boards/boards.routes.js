@@ -12,7 +12,7 @@ const {
 const router = express.Router();
 
 router.get('/', getAllBoardHandler);
-router.get('/user:ownerId', getAllUserBoardsHandler);
+router.get('/user', isAuthenticated, getAllUserBoardsHandler);
 router.get('/:id', getSingleBoardHandler);
 router.post('/', isAuthenticated, createBoardHandler);
 router.patch('/:id', isAuthenticated, updateBoardHandler);

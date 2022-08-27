@@ -28,9 +28,9 @@ async function getAllBoardHandler(_req, res) {
 }
 
 async function getAllUserBoardsHandler(req, res) {
-  const { ownerId } = req.params;
+  const { id } = req.user;
   try {
-    const userBoards = await getAllUserBoards(ownerId);
+    const userBoards = await getAllUserBoards(id);
     console.log('Showing all User boards');
     return res.status(200).json(userBoards);
   } catch (error) {
@@ -59,7 +59,7 @@ async function getSingleBoardHandler(req, res) {
 async function createBoardHandler(req, res) {
   const user = await req.user;
   const tempBoardData = req.body;
-  const boardData = { ...tempBoardData, owner: user.id };
+  const boardData = { ...tempBoardData, owner: user.id, key: Date.now() };
 
   try {
     const board = await createBoard(boardData);
