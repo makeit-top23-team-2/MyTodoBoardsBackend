@@ -77,6 +77,7 @@ async function createBoardHandler(req, res) {
     });
     const defaultColumns = [todo.id, doing.id, done.id];
     board.columns = defaultColumns;
+    board.key = board.id;
     await board.save();
     await addBoardToUser(user.id, board.id);
     console.log('Board created');

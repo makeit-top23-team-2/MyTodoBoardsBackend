@@ -5,10 +5,7 @@ function getAllBoard() {
 }
 
 function getSingleBoard(id) {
-  return Board.findById(id).populate(
-    { path: 'owner', select: 'userName' },
-    { path: 'columns', select: 'title' }
-  );
+  return Board.findById(id).populate({ path: 'columns', select: 'title' });
 }
 
 function getAllUserBoards(owner) {
