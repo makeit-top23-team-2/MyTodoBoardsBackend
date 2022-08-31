@@ -37,12 +37,12 @@ async function getSingleCardHandler(req, res) {
 }
 
 async function createCardHandler(req, res) {
-  const { id } = req.params;
-  const CardData = req.body;
+  const { columnId } = req.params;
+  const cardData = req.body;
 
   try {
-    const card = await createCard(CardData);
-    await addCardToColumn(id, card.id);
+    const card = await createCard(cardData);
+    await addCardToColumn(columnId, card.id);
     console.log('Card created', card);
     return res.status(201).json(card);
   } catch (error) {

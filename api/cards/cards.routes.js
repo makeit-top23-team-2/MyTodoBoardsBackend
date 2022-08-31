@@ -14,7 +14,7 @@ const {
 const router = express.Router();
 
 router.get('/', getAllCardHandler);
-router.post('/', isAuthenticated, createCardHandler);
+router.post('/:columnId', isAuthenticated, createCardHandler);
 router.get('/:id', getSingleCardHandler);
 router.patch('/:id', isAuthenticated, updateCardHandler);
 router.delete('/:id', isAuthenticated, deleteCardHandler);
