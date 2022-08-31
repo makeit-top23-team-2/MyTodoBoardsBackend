@@ -27,6 +27,7 @@ async function getAllBoardHandler(_req, res) {
   }
 }
 
+
 async function getAllUserBoardsHandler(req, res) {
   const { id } = req.user;
   try {
@@ -63,11 +64,13 @@ async function createBoardHandler(req, res) {
 
   try {
     const board = await createBoard(boardData);
+    
     const todo = await createColumn({
       title: 'To Do',
       board: board.id,
       inputId: Date.now(),
     });
+    
     const doing = await createColumn({
       title: 'Doing',
       board: board.id,
@@ -78,11 +81,13 @@ async function createBoardHandler(req, res) {
       board: board.id,
       inputId: Date.now(),
     });
+    
     const defaultColumns = [todo.id, doing.id, done.id];
     board.columns = defaultColumns;
     await board.save();
     await addBoardToUser(user.id, board.id);
     console.log('Board created');
+    
     return res.status(201).json(board);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -115,7 +120,9 @@ async function deleteBoardHandler(req, res) {
 
   if (user.id === board.owner.id.toString()) {
     try {
+
       await deleteBoardAtUser(user.id, board.id);
+
       board = await deleteBoard(id);
       if (!board) {
         console.log('Board not found');

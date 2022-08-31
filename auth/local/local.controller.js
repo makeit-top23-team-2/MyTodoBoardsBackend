@@ -105,10 +105,10 @@ async function loginUserHandler(req, res) {
       console.log('Incorrect password');
       return res.status(401).json({ message: 'Invalid Credentials' });
     }
-
     const jwtoken = await signToken({ email: user.email });
     console.log('User correctly loged', user);
     return res.json({ jwtoken, profile: user.profile });
+
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json(error);

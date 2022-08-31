@@ -24,6 +24,7 @@ const BoardSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+
     columns: [
       {
         type: mongoose.Schema.Types.ObjectId,

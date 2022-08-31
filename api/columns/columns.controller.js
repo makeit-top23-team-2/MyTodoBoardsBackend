@@ -45,6 +45,7 @@ async function getSingleColumnHandler(req, res) {
 async function createColumnHandler(req, res) {
   const { id } = req.params;
   let columnData = req.body;
+
   columnData = { ...columnData, board: id, inputId: Date.now() };
 
   try {
@@ -111,6 +112,7 @@ async function getColumnByBoardHandler(req, res) {
 
 async function createColumnByBoardHandler(req, res) {
   const { id } = req.params;
+
   let columnData = req.body;
   columnData = { ...columnData, board: id, inputId: Date.now() };
 
