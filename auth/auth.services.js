@@ -16,7 +16,7 @@ async function verifyToken(token) {
 }
 
 async function signToken(payload) {
-  const token = await jwt.sign(payload, KEY, { expiresIn: '1h' });
+  const token = await jwt.sign(payload, KEY, { expiresIn: '3h' });
   return token;
 }
 

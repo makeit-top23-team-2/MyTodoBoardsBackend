@@ -59,25 +59,27 @@ async function getSingleBoardHandler(req, res) {
 async function createBoardHandler(req, res) {
   const user = await req.user;
   const tempBoardData = req.body;
-  const boardData = { ...tempBoardData, owner: user.id, key: Date.now() };
+  const boardData = { ...tempBoardData, owner: user.id };
 
   try {
     const board = await createBoard(boardData);
     const todo = await createColumn({
       title: 'To Do',
       board: board.id,
+      inputId: Date.now(),
     });
     const doing = await createColumn({
       title: 'Doing',
       board: board.id,
+      inputId: Date.now(),
     });
     const done = await createColumn({
       title: 'Done',
       board: board.id,
+      inputId: Date.now(),
     });
     const defaultColumns = [todo.id, doing.id, done.id];
     board.columns = defaultColumns;
-    board.key = board.id;
     await board.save();
     await addBoardToUser(user.id, board.id);
     console.log('Board created');

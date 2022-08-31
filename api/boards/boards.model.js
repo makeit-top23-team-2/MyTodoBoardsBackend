@@ -8,10 +8,6 @@ const BoardSchema = new mongoose.Schema(
       minLength: 3,
       maxLength: 30,
     },
-    key: {
-      type: String,
-      required: true,
-    },
     color: {
       type: String,
       default: 'blue',
