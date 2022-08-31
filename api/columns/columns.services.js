@@ -5,7 +5,9 @@ function getAllColumn() {
 }
 
 function getSingleColumn(id) {
-  return Column.findById(id);
+  return Column.findById(id)
+    .populate({ path: 'cards', select: 'title' })
+    .populate({ path: 'columns', select: 'columnId' });
 }
 
 function createColumn(column) {

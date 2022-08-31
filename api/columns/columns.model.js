@@ -12,7 +12,10 @@ const ColumnSchema = new mongoose.Schema(
       type: String,
       default: 'blue',
     },
-
+    inputId: {
+      type: Number,
+      required: true,
+    },
     board: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Board',

@@ -5,7 +5,7 @@ function getAllUser() {
 }
 
 function getSingleUser(id) {
-  return User.findById(id).populate({path: 'cards', select: 'title'});
+  return User.findById(id).populate({ path: 'cards', select: 'title' });
 }
 
 function findOneUser(query) {
@@ -13,7 +13,7 @@ function findOneUser(query) {
 }
 
 function findUserByEmail(email) {
-  return User.findOne({ email }).populate({ path: 'boards', select: 'title' });
+  return User.findOne({ email });
 }
 
 function findUserByUserName(userName) {
@@ -36,7 +36,7 @@ function addBoardToUser(id, boardId) {
   return User.findByIdAndUpdate(
     id,
     { $push: { boards: boardId } },
-    { new: true },
+    { new: true }
   );
 }
 

@@ -16,13 +16,13 @@ async function verifyToken(token) {
 }
 
 async function signToken(payload) {
-  const token = await jwt.sign(payload, KEY, { expiresIn: '1h' });
+  const token = await jwt.sign(payload, KEY, { expiresIn: '3h' });
   return token;
 }
 
 async function isAuthenticated(req, res, next) {
   // verificas que llega el token
-  const auth = req.headers? req.headers.authorization: null;
+  const auth = req.headers ? req.headers.authorization : null;
 
   if (!auth) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -46,6 +46,10 @@ async function isAuthenticated(req, res, next) {
   }
 
   req.user = user;
+  console.log(
+    '🚀 ~ file: auth.services.js ~ line 49 ~ isAuthenticated ~ user',
+    user
+  );
 
   next();
   return null;
