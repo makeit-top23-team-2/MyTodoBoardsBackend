@@ -30,6 +30,22 @@ function createColumnByBoard(id, column) {
   return Column.create({ ...column, board: id });
 }
 
+function addCardToColumn(id, cardId) {
+  return Column.findByIdAndUpdate(
+    id,
+    { $push: { cards: cardId } },
+    { new: true }
+  );
+}
+
+function deleteCardAtColumn(id, cardId) {
+  return Column.findByIdAndUpdate(
+    id,
+    { $pull: { cards: cardId } },
+    { new: true }
+  );
+}
+
 module.exports = {
   getAllColumn,
   getSingleColumn,
@@ -38,4 +54,6 @@ module.exports = {
   deleteColumn,
   getColumnByBoard,
   createColumnByBoard,
+  addCardToColumn,
+  deleteCardAtColumn,
 };
