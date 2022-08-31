@@ -42,6 +42,10 @@ async function createCardHandler(req, res) {
 
   try {
     const card = await createCard(cardData);
+    console.log(
+      '🚀 ~ file: cards.controller.js ~ line 45 ~ createCardHandler ~ card',
+      card
+    );
     await addCardToColumn(columnId, card.id);
     console.log('Card created', card);
     return res.status(201).json(card);

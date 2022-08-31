@@ -21,10 +21,12 @@ const ColumnSchema = new mongoose.Schema(
       ref: 'Board',
       required: true,
     },
-    cards: {
-      type: Array,
-      default: [],
-    },
+    cards: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Card',
+      },
+    ],
   },
   {
     timestamps: true,

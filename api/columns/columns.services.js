@@ -5,9 +5,10 @@ function getAllColumn() {
 }
 
 function getSingleColumn(id) {
-  return Column.findById(id)
-    .populate({ path: 'cards', select: 'title' })
-    .populate({ path: 'columns', select: 'columnId' });
+  return Column.findById(id).populate({
+    path: 'cards',
+    select: 'title img board column',
+  });
 }
 
 function createColumn(column) {
