@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 const loginSchema = Joi.object({
   email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    .email({ minDomainSegments: 2, tlds: { allow: true } })
     .required(),
 
   password: Joi.string()
@@ -24,7 +24,7 @@ function validateLogin(req, res, next) {
 
 const registerSchema = Joi.object({
   email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    .email({ minDomainSegments: 2, tlds: { allow: true } })
     .required(),
 
   password: Joi.string()
@@ -44,7 +44,7 @@ function registerLogin(req, res, next) {
   const { error } = registerSchema.validate(payload);
   if (error) {
     console.error(error);
-    return res.status(400).json({ error, message: 'missing data' });
+    return res.status(400).json(error);
   }
   next();
   return null;

@@ -6,11 +6,13 @@ const {
   getSingleBoardHandler,
   updateBoardHandler,
   deleteBoardHandler,
+  getAllUserBoardsHandler,
 } = require('./boards.controller');
 
 const router = express.Router();
 
 router.get('/', getAllBoardHandler);
+router.get('/user', isAuthenticated, getAllUserBoardsHandler);
 router.get('/:id', getSingleBoardHandler);
 router.post('/', isAuthenticated, createBoardHandler);
 router.patch('/:id', isAuthenticated, updateBoardHandler);

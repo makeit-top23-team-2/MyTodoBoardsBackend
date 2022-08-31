@@ -1,6 +1,9 @@
 const services = require('./columns.services');
 
-const {addColumnToBoard, deleteColumnAtBoard} = require('../boards/boards.services')
+const {
+  addColumnToBoard,
+  deleteColumnAtBoard,
+} = require('../boards/boards.services');
 
 const {
   createColumn,
@@ -42,10 +45,12 @@ async function getSingleColumnHandler(req, res) {
 async function createColumnHandler(req, res) {
   const { id } = req.params;
   let columnData = req.body;
-  columnData = { ...columnData, board: id };
+
+  columnData = { ...columnData, board: id, inputId: Date.now() };
+
   try {
     const column = await createColumn(columnData);
-    await addColumnToBoard(id,column.id)
+    await addColumnToBoard(id, column.id);
     console.log('Column created', column);
     return res.status(201).json(column);
   } catch (error) {
@@ -74,7 +79,7 @@ async function updateColumnHandler(req, res) {
 async function deleteColumnHandler(req, res) {
   const { id } = req.params;
   try {
-    const column = await getSingleColumn(id)
+    const column = await getSingleColumn(id);
     if (!column) {
       console.log('Column not found');
       return res.status(404).json({ message: 'Column not found' });
@@ -82,7 +87,7 @@ async function deleteColumnHandler(req, res) {
     await deleteColumnAtBoard(id, column.board);
     await deleteColumn(id);
     console.log(`Column ${id} eliminated`);
-    return res.json({message: "Column deleted successfully"});
+    return res.json({ message: 'Column deleted successfully' });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
@@ -107,9 +112,13 @@ async function getColumnByBoardHandler(req, res) {
 
 async function createColumnByBoardHandler(req, res) {
   const { id } = req.params;
-  const columnData = req.body;
+
+  let columnData = req.body;
+  columnData = { ...columnData, board: id, inputId: Date.now() };
+
   try {
     const column = await createColumnByBoard(id, columnData);
+    await addColumnToBoard(id, column.id);
     console.log('Column created', column);
     return res.status(201).json(column);
   } catch (error) {

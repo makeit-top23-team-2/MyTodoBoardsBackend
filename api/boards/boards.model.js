@@ -24,10 +24,13 @@ const BoardSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    columns:[ {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Column',
-    }],
+
+    columns: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Column',
+      },
+    ],
     url: {
       type: String,
     },

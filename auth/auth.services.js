@@ -16,37 +16,33 @@ async function verifyToken(token) {
 }
 
 async function signToken(payload) {
-  const token = await jwt.sign(payload, KEY, { expiresIn: '1h' });
+  const token = await jwt.sign(payload, KEY, { expiresIn: '3h' });
   return token;
 }
-
 async function isAuthenticated(req, res, next) {
-  // verificas que llega el token
-  const auth = req.headers? req.headers.authorization: null;
+  const auth = req.headers ? req.headers.authorization : null;
 
   if (!auth) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
-  // tomas el token
   const token = auth.split(' ')[1];
-
-  // validar el token
   const decoded = await verifyToken(token);
 
   if (!decoded) {
     return res.status(401).json({ message: 'unAuthorized' });
-  }
-
-  // add user to request
+  }  
   const { email } = decoded;
   const user = await findUserByEmail(email);
 
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
   }
-
   req.user = user;
 
+  console.log(
+    '🚀 ~ file: auth.services.js ~ line 49 ~ isAuthenticated ~ user',
+    user
+  );
   next();
   return null;
 }
