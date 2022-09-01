@@ -5,9 +5,10 @@ function getAllColumn() {
 }
 
 function getSingleColumn(id) {
-  return Column.findById(id)
-    .populate({ path: 'cards', select: 'title' })
-    .populate({ path: 'columns', select: 'columnId' });
+  return Column.findById(id).populate({
+    path: 'cards',
+    select: 'title img board column',
+  });
 }
 
 function createColumn(column) {
@@ -30,6 +31,22 @@ function createColumnByBoard(id, column) {
   return Column.create({ ...column, board: id });
 }
 
+function addCardToColumn(id, cardId) {
+  return Column.findByIdAndUpdate(
+    id,
+    { $push: { cards: cardId } },
+    { new: true }
+  );
+}
+
+function deleteCardAtColumn(id, cardId) {
+  return Column.findByIdAndUpdate(
+    id,
+    { $pull: { cards: cardId } },
+    { new: true }
+  );
+}
+
 module.exports = {
   getAllColumn,
   getSingleColumn,
@@ -38,4 +55,6 @@ module.exports = {
   deleteColumn,
   getColumnByBoard,
   createColumnByBoard,
+  addCardToColumn,
+  deleteCardAtColumn,
 };

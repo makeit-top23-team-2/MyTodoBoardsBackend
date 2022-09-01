@@ -1,5 +1,10 @@
 const services = require('./cards.services');
 
+const {
+  addCardToColumn,
+  deleteCardAtColumn,
+} = require('../columns/columns.services');
+
 const { createCard, getAllCard, getSingleCard, updateCard, deleteCard } =
   services;
 
@@ -32,10 +37,16 @@ async function getSingleCardHandler(req, res) {
 }
 
 async function createCardHandler(req, res) {
-  const CardData = req.body;
+  const { columnId } = req.params;
+  const cardData = req.body;
 
   try {
-    const card = await createCard(CardData);
+    const card = await createCard(cardData);
+    console.log(
+      '🚀 ~ file: cards.controller.js ~ line 45 ~ createCardHandler ~ card',
+      card
+    );
+    await addCardToColumn(columnId, card.id);
     console.log('Card created', card);
     return res.status(201).json(card);
   } catch (error) {
@@ -62,10 +73,12 @@ async function deleteCardHandler(req, res) {
   const { id } = req.params;
 
   try {
-    const card = await deleteCard(id);
+    const card = await getSingleCard(id);
     if (!card) {
       return res.status(401).json({ message: 'Card not found' });
     }
+    await deleteCardAtColumn(id, card.id);
+    await deleteCard(id);
     console.log(`Card ${id} eliminated`);
     return res.status(200).json({ message: 'Card deleted' });
   } catch (error) {
