@@ -12,7 +12,7 @@ const { signToken } = require('../auth.services');
 async function changePasswordHandler(req, res) {
   const { token } = req.params;
 
-  const { password } = req.body;
+  const { newPassword } = req.body;
 
   try {
     const user = await findOneUser({ passwordResetActivationToken: token });
@@ -29,7 +29,7 @@ async function changePasswordHandler(req, res) {
 
     user.passwordResetActivationToken = null;
     user.passwordResetActivationExpires = null;
-    user.password = password;
+    user.password = newPassword;
 
     await user.save();
 
@@ -40,6 +40,34 @@ async function changePasswordHandler(req, res) {
       profile: user.profile,
       message: 'Password has been reset successfully',
     });
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(500).json({ error });
+  }
+}
+
+async function resetPasswordHandler(req, res) {
+  const { email } = req.user;
+  console.log(
+    '🚀 ~ file: local.controller.js ~ line 51 ~ resetPasswordHandler ~ email',
+    email
+  );
+
+  try {
+    const user = await findUserByEmail(email);
+    if (!user) {
+      console.log('User not found');
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const hash = crypto.createHash('sha256').update(email).digest('hex');
+
+    user.passwordResetActivationToken = hash;
+
+    user.passwordResetActivationExpires = Date.now() + 3_600_000; // 1 hour
+
+    await user.save();
+
+    return res.status(200).json({ hash });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
@@ -108,7 +136,6 @@ async function loginUserHandler(req, res) {
     const jwtoken = await signToken({ email: user.email });
     console.log('User correctly loged', user);
     return res.json({ jwtoken, profile: user.profile });
-
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json(error);
@@ -155,4 +182,5 @@ module.exports = {
   forgotPasswordHandler,
   veryfyAccountHandler,
   loginUserHandler,
+  resetPasswordHandler,
 };
