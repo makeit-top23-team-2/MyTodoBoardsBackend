@@ -110,13 +110,16 @@ async function createUserHandler(req, res) {
 }
 
 async function updateUserHandler(req, res) {
-  const { newUser } = req.body;
-  const { id } = req.user;
+  const userUpdate = req.body;
+  const { id, email } = req.user;
 
   try {
-    await updateUser(id, newUser);
-    console.log('User id:', id, 'Data updated:', newUser);
-    return res.status(200).json({ message: 'User updated' });
+    await updateUser(id, userUpdate);
+    const user = await findUserByEmail(email);
+    console.log('User id:', id, 'Data updated:', userUpdate);
+    return res
+      .status(200)
+      .json({ message: 'User updated', profile: user.profile });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ message: 'Error updating user', error });
@@ -124,12 +127,8 @@ async function updateUserHandler(req, res) {
 }
 
 async function deleteUserHandler(req, res) {
-  const { user } = req;
-  const { id } = req.params;
-  if (!(user.id === id)) {
-    console.log('Cannot delete another user than yourself');
-    return res.status(401).json({ message: 'unAuthorized' });
-  }
+  const { id } = req.user;
+
   try {
     await deleteUser(id);
     console.log(`User ${id} eliminated`);
