@@ -127,6 +127,13 @@ async function loginUserHandler(req, res) {
       return res.status(404).json({ message: 'Invalid Credentials' });
     }
 
+    if (user.isActive === false) {
+      console.log('The account has not been activated');
+      return res
+        .status(403)
+        .json({ message: 'The account has not been activated!' });
+    }
+
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
@@ -134,8 +141,12 @@ async function loginUserHandler(req, res) {
       return res.status(401).json({ message: 'Invalid Credentials' });
     }
     const jwtoken = await signToken({ email: user.email });
-    console.log('User correctly loged', user);
-    return res.json({ jwtoken, profile: user.profile });
+    console.log('Successful login', user);
+    return res.json({
+      jwtoken,
+      profile: user.profile,
+      message: 'Welcome back!',
+    });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json(error);
