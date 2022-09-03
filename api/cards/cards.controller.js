@@ -62,7 +62,7 @@ async function updateCardHandler(req, res) {
   try {
     const card = await updateCard(id, cardData);
     console.log('User id:', id, 'Data updated:', cardData);
-    return res.status(200).json({ message: 'Card updated' }, card);
+    return res.status(200).json(card);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ message: 'Error updating card' });

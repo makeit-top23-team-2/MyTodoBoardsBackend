@@ -7,7 +7,6 @@ function getAllColumn() {
 function getSingleColumn(id) {
   return Column.findById(id).populate({
     path: 'cards',
-    select: 'title img board column',
   });
 }
 
