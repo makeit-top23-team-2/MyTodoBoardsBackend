@@ -34,6 +34,9 @@ const CardSchema = new mongoose.Schema(
     url: {
       type: String,
     },
+    checklist: {
+      type: Array,
+    },
   },
   { timestamps: true }
 );
