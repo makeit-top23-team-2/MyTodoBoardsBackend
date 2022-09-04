@@ -30,7 +30,7 @@ async function isAuthenticated(req, res, next) {
 
   if (!decoded) {
     return res.status(401).json({ message: 'unAuthorized' });
-  }  
+  }
   const { email } = decoded;
   const user = await findUserByEmail(email);
 

@@ -39,6 +39,12 @@ const UserSchema = new mongoose.Schema(
         ref: 'Board',
       },
     ],
+    SharedBoards: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Board',
+      },
+    ],
     cards: [
       {
         type: mongoose.Schema.Types.ObjectId,
