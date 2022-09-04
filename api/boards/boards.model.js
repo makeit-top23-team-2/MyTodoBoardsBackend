@@ -10,7 +10,7 @@ const BoardSchema = new mongoose.Schema(
     },
     color: {
       type: String,
-      default: 'blue',
+      default: 'https://res.cloudinary.com/davpin/image/upload/v1662170583/fondo-trello_odps0n.png',
     },
     image: {
       type: String,
