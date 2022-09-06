@@ -137,6 +137,22 @@ async function deleteBoardHandler(req, res) {
   return res.status(401).json({ message: 'unAuthorized' });
 }
 
+async function AddCollaboratorsHandler(req, res) {
+  const { boardId } = req.params;
+  const { id } = req.user;
+  const board = await getSingleBoard(boardId);
+  board.collaborators.push(id);
+  await board.save();
+  try {
+    await updateBoard(boardId, id);
+    console.log('Showing all User boards');
+    return res.status(200).json(userBoards);
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(501).json({ error });
+  }
+}
+
 module.exports = {
   getAllBoardHandler,
   getSingleBoardHandler,
@@ -144,4 +160,5 @@ module.exports = {
   updateBoardHandler,
   deleteBoardHandler,
   getAllUserBoardsHandler,
+  AddCollaboratorsHandler,
 };
