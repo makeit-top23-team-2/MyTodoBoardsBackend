@@ -117,14 +117,6 @@ async function deleteBoardHandler(req, res) {
   const user = await req.user;
   let board = await getSingleBoard(id);
 
-  console.log(
-    '🚀 ~ file: boards.controller.js ~ line 121 ~ deleteBoardHandler ~ board.owner.id',
-    board.owner
-  );
-  console.log(
-    '🚀 ~ file: boards.controller.js ~ line 122 ~ deleteBoardHandler ~ user.id',
-    user.id
-  );
   if (user.id === board.owner.toString()) {
     try {
       await deleteBoardAtUser(user.id, board.id);
