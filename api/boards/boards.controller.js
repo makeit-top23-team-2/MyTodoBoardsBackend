@@ -145,22 +145,11 @@ async function deleteBoardHandler(req, res) {
 async function AddCollaboratorsHandler(req, res) {
   const { boardId } = req.params;
   const { email } = req.body;
-  console.log(
-    '🚀 ~ file: boards.controller.js ~ line 148 ~ AddCollaboratorsHandler ~ email',
-    email
-  );
 
   try {
     const board = await getSingleBoard(boardId);
-    console.log(
-      '🚀 ~ file: boards.controller.js ~ line 155 ~ AddCollaboratorsHandler ~ board',
-      board
-    );
     const collaborator = await findUserByEmail(email);
-    console.log(
-      '🚀 ~ file: boards.controller.js ~ line 152 ~ AddCollaboratorsHandler ~ collaborator',
-      collaborator
-    );
+
     if (!collaborator) {
       console.log('This email address is not registered in Trello.');
       return res
