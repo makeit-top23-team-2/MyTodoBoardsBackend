@@ -143,6 +143,7 @@ async function deleteBoardHandler(req, res) {
 }
 
 async function AddCollaboratorsHandler(req, res) {
+  const { user } = req;
   const { boardId } = req.params;
   const { email } = req.body;
 
@@ -167,8 +168,8 @@ async function AddCollaboratorsHandler(req, res) {
       to: collaborator.email,
       template_id: 'd-bf1b6019d4aa495085119859a2096372',
       dynamic_template_data: {
-        name: collaborator.name.capitalize(),
-        lastName: collaborator.lastName.capitalize(),
+        name: user.name.capitalize(),
+        lastName: user.lastName.capitalize(),
         url: `${process.env.FRONTEND_URL}/board/${boardId}`,
       },
     };
