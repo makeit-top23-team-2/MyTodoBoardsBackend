@@ -81,7 +81,7 @@ async function forgotPasswordHandler(req, res) {
     const user = await findUserByEmail(email);
     if (!user) {
       console.log('User not found');
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ status: 404, message: 'User not found' });
     }
     const hash = crypto.createHash('sha256').update(email).digest('hex');
 
@@ -107,12 +107,13 @@ async function forgotPasswordHandler(req, res) {
 
     await sendMailSendGrid(message);
     console.log('An email was sent to change the password');
-    return res
-      .status(200)
-      .json({ message: 'An email was sent to change the password' });
+    return res.status(200).json({
+      status: 200,
+      message: 'An email was sent to change the password',
+    });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
-    return res.status(500).json({ error });
+    return res.status(500).json({ status: 500, error });
   }
 }
 
