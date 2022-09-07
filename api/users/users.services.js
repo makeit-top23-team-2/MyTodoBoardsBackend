@@ -12,6 +12,10 @@ function findOneUser(query) {
   return User.findOne(query);
 }
 
+function getAllSharedBoards(id) {
+  return User.findById(id).populate({ path: 'sharedBoards' });
+}
+
 function findUserByEmail(email) {
   return User.findOne({ email });
 }
@@ -68,4 +72,5 @@ module.exports = {
   updateUser,
   deleteUser,
   addBoardToCollaborator,
+  getAllSharedBoards,
 };

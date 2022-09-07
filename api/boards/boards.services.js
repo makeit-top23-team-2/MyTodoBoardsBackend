@@ -5,7 +5,6 @@ function getAllBoard() {
 }
 
 function getSingleBoard(id) {
-
   return Board.findById(id).populate({
     path: 'columns',
     select: 'title inputId cards',
