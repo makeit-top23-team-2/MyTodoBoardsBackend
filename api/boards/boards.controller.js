@@ -165,7 +165,7 @@ async function AddCollaboratorsHandler(req, res) {
     const message = {
       from: '"no-reply" <clon.frello@gmail.com>',
       to: collaborator.email,
-      template_id: 'd-a6a296f04ab4420d87f8758c4b635fbb',
+      template_id: 'd-bf1b6019d4aa495085119859a2096372',
       dynamic_template_data: {
         name: collaborator.name.capitalize(),
         lastName: collaborator.lastName.capitalize(),
