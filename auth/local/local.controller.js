@@ -125,7 +125,9 @@ async function loginUserHandler(req, res) {
 
     if (!user) {
       console.log('User not found');
-      return res.status(404).json({ message: 'Invalid Credentials' });
+      return res
+        .status(404)
+        .json({ status: 404, message: 'Invalid Credentials' });
     }
 
     if (user.isActive === false) {
@@ -139,7 +141,9 @@ async function loginUserHandler(req, res) {
 
     if (!isMatch) {
       console.log('Incorrect password');
-      return res.status(401).json({ message: 'Invalid Credentials' });
+      return res
+        .status(401)
+        .json({ status: 401, message: 'Invalid Credentials' });
     }
     const jwtoken = await signToken({ email: user.email });
     console.log('Successful login', user);
@@ -150,7 +154,7 @@ async function loginUserHandler(req, res) {
     });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
-    return res.status(500).json(error);
+    return res.status(500).json({ status: 401, error });
   }
 }
 
