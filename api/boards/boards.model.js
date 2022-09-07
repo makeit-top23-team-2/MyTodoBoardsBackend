@@ -10,7 +10,8 @@ const BoardSchema = new mongoose.Schema(
     },
     color: {
       type: String,
-      default: 'blue',
+      default:
+        'https://res.cloudinary.com/davpin/image/upload/v1662170583/fondo-trello_odps0n.png',
     },
     image: {
       type: String,
@@ -20,10 +21,12 @@ const BoardSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    contributors: {
-      type: Array,
-      default: [],
-    },
+    collaborators: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
 
     columns: [
       {

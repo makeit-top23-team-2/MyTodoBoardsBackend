@@ -14,7 +14,8 @@ const UserSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: 'https://i.imgur.com/elMnIEy.gif',
+      default:
+        'https://res.cloudinary.com/davpin/image/upload/v1662389283/trello_jrp46u.png',
     },
     email: {
       type: String,
@@ -39,7 +40,7 @@ const UserSchema = new mongoose.Schema(
         ref: 'Board',
       },
     ],
-    SharedBoards: [
+    sharedBoards: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Board',
