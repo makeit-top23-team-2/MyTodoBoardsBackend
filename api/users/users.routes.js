@@ -21,8 +21,8 @@ const {
 const router = express.Router();
 
 router.get('/', getAllUserHandler);
-router.get('/:id', getSingleUserHandler);
 router.get('/shared-boards', isAuthenticated, getAllSharedBoardsHandler);
+router.get('/:id', getSingleUserHandler);
 router.get('/user/:userName', findUserByUserNameHandler);
 router.post('/', registerLogin, createUserHandler);
 router.get('/email/:email', getUserByEmailHandler);

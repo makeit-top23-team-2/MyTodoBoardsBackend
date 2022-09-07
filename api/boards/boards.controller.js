@@ -153,9 +153,10 @@ async function AddCollaboratorsHandler(req, res) {
 
     if (!collaborator) {
       console.log('This email address is not registered in Trello.');
-      return res
-        .status(404)
-        .json({ message: 'This email address is not registered in Trello!' });
+      return res.status(404).json({
+        status: 404,
+        message: 'This email address is not registered in Trello!',
+      });
     }
     const { id } = collaborator;
 
@@ -177,12 +178,13 @@ async function AddCollaboratorsHandler(req, res) {
     await sendMailSendGrid(message);
 
     console.log(`Collaborator ${id} added to board ${boardId}`);
-    return res
-      .status(200)
-      .json({ message: `Collaborator ${id} added to board ${boardId}` });
+    return res.status(200).json({
+      status: 200,
+      message: `Collaborator ${id} added to board ${boardId}`,
+    });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
-    return res.status(500).json({ error });
+    return res.status(500).json({ status: 500, error });
   }
 }
 

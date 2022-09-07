@@ -65,8 +65,8 @@ async function getAllSharedBoardsHandler(req, res) {
     id
   );
   try {
-    const userSharedBoards = await getAllSharedBoards(id);
-    const { sharedBoards } = userSharedBoards;
+    const user = await getAllSharedBoards(id);
+    const { sharedBoards } = user;
     if (!sharedBoards) {
       console.log('No shared Boards found');
       return res.status(404).json({ message: 'No shared Boards found' });
@@ -75,7 +75,7 @@ async function getAllSharedBoardsHandler(req, res) {
     return res.status(200).json(sharedBoards);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
-    return res.status(501).json({ error });
+    return res.status(500).json({ error });
   }
 }
 
