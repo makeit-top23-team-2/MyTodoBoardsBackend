@@ -10,6 +10,7 @@ const {
   getSingleUser,
   updateUser,
   deleteUser,
+  getAllSharedBoards,
 } = services;
 
 const { sendMailSendGrid } = require('../../utils/mail');
@@ -24,6 +25,7 @@ async function getAllUserHandler(req, res) {
     return res.status(500).json({ error });
   }
 }
+
 async function getSingleUserHandler(req, res) {
   const { id } = req.params;
   try {
@@ -38,6 +40,7 @@ async function getSingleUserHandler(req, res) {
     return res.status(500).json({ error });
   }
 }
+
 async function getUserByEmailHandler(req, res) {
   const { email } = req.params;
   try {
@@ -49,6 +52,27 @@ async function getUserByEmailHandler(req, res) {
     }
     console.log('Showing user', user);
     return res.json(user);
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(500).json({ error });
+  }
+}
+
+async function getAllSharedBoardsHandler(req, res) {
+  const { id } = req.user;
+  console.log(
+    '🚀 ~ file: users.controller.js ~ line 63 ~ getAllSharedBoardsHandler ~ id',
+    id
+  );
+  try {
+    const user = await getAllSharedBoards(id);
+    const { sharedBoards } = user;
+    if (!sharedBoards) {
+      console.log('No shared Boards found');
+      return res.status(404).json({ message: 'No shared Boards found' });
+    }
+    console.log('Showing all User Shared Boards');
+    return res.status(200).json(sharedBoards);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
@@ -147,4 +171,5 @@ module.exports = {
   createUserHandler,
   updateUserHandler,
   deleteUserHandler,
+  getAllSharedBoardsHandler,
 };
