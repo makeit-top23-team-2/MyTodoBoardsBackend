@@ -7,6 +7,7 @@ const {
   updateBoardHandler,
   deleteBoardHandler,
   getAllUserBoardsHandler,
+  AddCollaboratorsHandler,
 } = require('./boards.controller');
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.get('/user', isAuthenticated, getAllUserBoardsHandler);
 router.get('/:id', getSingleBoardHandler);
 router.post('/', isAuthenticated, createBoardHandler);
 router.patch('/:id', isAuthenticated, updateBoardHandler);
+router.put('/:boardId', isAuthenticated, AddCollaboratorsHandler);
 router.delete('/:id', isAuthenticated, deleteBoardHandler);
 
 module.exports = router;

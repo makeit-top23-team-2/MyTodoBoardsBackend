@@ -40,6 +40,14 @@ function addBoardToUser(id, boardId) {
   );
 }
 
+function addBoardToCollaborator(id, boardId) {
+  return User.findByIdAndUpdate(
+    id,
+    { $push: { sharedBoards: boardId } },
+    { new: true }
+  );
+}
+
 function deleteBoardAtUser(id, boardId) {
   return User.findByIdAndUpdate(
     id,
@@ -59,4 +67,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  addBoardToCollaborator,
 };
