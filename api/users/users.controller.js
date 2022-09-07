@@ -60,10 +60,7 @@ async function getUserByEmailHandler(req, res) {
 
 async function getAllSharedBoardsHandler(req, res) {
   const { id } = req.user;
-  console.log(
-    '🚀 ~ file: users.controller.js ~ line 63 ~ getAllSharedBoardsHandler ~ id',
-    id
-  );
+
   try {
     const user = await getAllSharedBoards(id);
     const { sharedBoards } = user;
