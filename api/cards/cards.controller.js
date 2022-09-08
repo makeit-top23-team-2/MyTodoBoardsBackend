@@ -60,6 +60,10 @@ async function updateCardHandler(req, res) {
   const cardData = req.body;
 
   try {
+    if (cardData.files) {
+      const cardFileNew = await getSingleCard(id);
+      cardData.files = cardData.files.concat(cardFileNew.files);
+    }
     const card = await updateCard(id, cardData);
     console.log('User id:', id, 'Data updated:', cardData);
     return res.status(200).json(card);
