@@ -20,6 +20,8 @@ function deleteCard(id) {
   return Card.findByIdAndRemove(id);
 }
 
+
+
 module.exports = {
   getAllCard,
   getSingleCard,
