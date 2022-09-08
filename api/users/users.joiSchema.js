@@ -30,10 +30,6 @@ const changePasswordSchema = Joi.object({
 
 function changePasswordValidation(req, res, next) {
   const { newPassword } = req.body;
-  console.log(
-    '🚀 ~ file: users.joiSchema.js ~ line 33 ~ changePasswordValidation ~ password',
-    newPassword
-  );
   const payload = { newPassword };
   const { error } = changePasswordSchema.validate(payload);
 
