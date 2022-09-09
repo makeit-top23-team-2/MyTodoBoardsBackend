@@ -93,10 +93,6 @@ async function deleteCardHandler(req, res) {
 
 async function deleteFileHandler(req, res) {
   const { id } = req.params;
-  console.log(
-    '🚀 ~ file: cards.controller.js ~ line 96 ~ deleteFileHandler ~ req.params',
-    req.params
-  );
 
   const { idFile } = req.body;
   try {
