@@ -91,10 +91,34 @@ async function deleteCardHandler(req, res) {
   }
 }
 
+async function deleteFileHandler(req, res) {
+  const { id } = req.params;
+  console.log(
+    '🚀 ~ file: cards.controller.js ~ line 96 ~ deleteFileHandler ~ req.params',
+    req.params
+  );
+
+  const { idFile } = req.body;
+  try {
+    const card = await getSingleCard(id);
+    if (!card) {
+      return res.status(401).json({ message: 'Card not found' });
+    }
+    const files = card.files.filter(file => file.id !== idFile);
+    await updateCard(id, { files });
+    console.log(`File ${idFile} eliminated`);
+    return res.status(200).json({ message: 'File deleted' });
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(500).json({ message: 'Error' });
+  }
+}
+
 module.exports = {
   getAllCardHandler,
   getSingleCardHandler,
   createCardHandler,
   updateCardHandler,
   deleteCardHandler,
+  deleteFileHandler,
 };
