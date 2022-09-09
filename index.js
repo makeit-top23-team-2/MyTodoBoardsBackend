@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 
+const connectDb = require('./config/database');
 const configExpress = require('./config/express');
 const routesConfig = require('./routes');
-const connectDb = require('./config/database');
 
 // eslint-disable-next-line no-extend-native
 Object.defineProperty(String.prototype, 'capitalize', {

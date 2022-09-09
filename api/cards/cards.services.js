@@ -5,7 +5,10 @@ function getAllCard() {
 }
 
 function getSingleCard(id) {
-  return Card.findById(id);
+  return Card.findById(id).populate({
+    path: 'creator',
+    select: 'userName',
+  });
 }
 
 function createCard(card) {
@@ -19,8 +22,6 @@ function updateCard(id, card) {
 function deleteCard(id) {
   return Card.findByIdAndRemove(id);
 }
-
-
 
 module.exports = {
   getAllCard,
