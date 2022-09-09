@@ -12,7 +12,7 @@ async function uploadProfile(req, res) {
       resource_type: 'auto',
     });
 
-    return res.json(result.url);
+    return res.json(result.secure_url);
   } catch (error) {
     return res.status(500).json(error);
   } finally {
