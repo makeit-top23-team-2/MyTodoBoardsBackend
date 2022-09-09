@@ -17,12 +17,10 @@ const CardSchema = new mongoose.Schema(
       ref: 'Board',
       required: true,
     },
-    members: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users',
-      },
-    ],
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     deadline: {
       type: Date,
     },
@@ -37,6 +35,16 @@ const CardSchema = new mongoose.Schema(
     checklist: {
       type: Array,
     },
+    files: [
+      {
+        name: {
+          type: String,
+        },
+        url: {
+          type: String,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
