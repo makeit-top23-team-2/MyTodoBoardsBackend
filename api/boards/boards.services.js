@@ -5,10 +5,19 @@ function getAllBoard() {
 }
 
 function getSingleBoard(id) {
-  return Board.findById(id).populate({
-    path: 'columns',
-    select: 'title inputId cards',
-  });
+  return Board.findById(id)
+    .populate({
+      path: 'columns',
+      select: 'title inputId cards',
+    })
+    .populate({
+      path: 'collaborators',
+      select: 'userName avatar',
+    })
+    .populate({
+      path: 'owner',
+      select: 'userName avatar',
+    });
 }
 
 function getAllUserBoards(owner) {

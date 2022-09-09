@@ -120,10 +120,10 @@ async function updateBoardHandler(req, res) {
 async function deleteBoardHandler(req, res) {
   const { id } = req.params;
   const user = await req.user;
-  let board = await getSingleBoard(id);
+  try {
+    let board = await getSingleBoard(id);
 
-  if (user.id === board.owner.toString()) {
-    try {
+    if (user.id === board.owner.id.toString()) {
       await deleteBoardAtUser(user.id, board.id);
 
       board = await deleteBoard(id);
@@ -133,11 +133,12 @@ async function deleteBoardHandler(req, res) {
       }
 
       return res.json({ message: 'Board eliminated' });
-    } catch (error) {
-      console.error(`[ERROR]: ${error}`);
-      return res.status(500).json({ error });
     }
+  } catch (error) {
+    console.error(`[ERROR]: ${error}`);
+    return res.status(500).json({ error });
   }
+
   console.log("Can't delete a board that you don't own");
   return res.status(401).json({ message: 'Unauthorized' });
 }
